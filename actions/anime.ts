@@ -10,8 +10,8 @@ bot.command('anime', async(ctx: Context) => {
         `${SHIKIMORI}${anime.image}`,
         {
             caption: `${anime.name}/${anime.russian}\nEpisodes: ${anime.episodes}\nRating: ${anime.rating}\nDescription: ${anime.description}\n[Page on Shikimori](${SHIKIMORI}${anime.url})`,
-            parse_mode:"Markdown"
-        
+            parse_mode:"Markdown",
+            message_thread_id: ctx.update.message?.message_thread_id
         }
     )
 })
