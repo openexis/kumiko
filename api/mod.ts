@@ -11,7 +11,6 @@ async function search_anime(name: string) {
 
     const response = await axiod.get(URL)
     const res = response.data
-
     return {
         "id": id,
         "name": res.name,
@@ -22,7 +21,7 @@ async function search_anime(name: string) {
         "status": res.status,
         "license_name": res.license_name_ru,
         "episodes": res.episodes,
-        "description": res.description
+        "description": res.description.slice(0,847) + "..."
     }
 
 }
