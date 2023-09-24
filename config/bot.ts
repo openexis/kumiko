@@ -6,9 +6,9 @@ export const bot = new Bot(Deno.env.get("BOT_TOKEN") as string)
 export const instance = await bot.api.getMe();
 
 bot.api.setMyCommands([
-    { command: "start",  description: "Start the bot."},
-    { command: "anime",  description:"To search anime from shikimori."},
-    { command: "source",  description:"Get link to the source code."},
+    { command: "start",  description: "Запустить бота."},
+    { command: "anime",  description:"Искать аниме."},
+    { command: "source",  description:"Получить ссылку на исходный код."},
 ])
 
 bot.use(autoThread())
