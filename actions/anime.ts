@@ -9,7 +9,7 @@ bot.command('anime', async(ctx: Context) => {
         ctx.update.message?.chat.id as number,
         `${SHIKIMORI}${anime.image}`,
         {
-            caption: `${anime.name}/${anime.russian}\nЭпизоды: ${anime.episodes}\nРейтинг: ${anime.rating}\nОписание: ${anime.description}\n[Продолжать читать в Shikimori...](${SHIKIMORI}${anime.url})`,
+            caption: `${anime.name}/${anime.russian}\nЭпизоды: ${anime.episodes}\nРейтинг: ${anime.rating}\nОписание: ${anime.description}...\n[Продолжать читать в Shikimori...](${SHIKIMORI}${anime.url})`,
             parse_mode:"Markdown",
         }
     )

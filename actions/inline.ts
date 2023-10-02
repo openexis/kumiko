@@ -15,7 +15,7 @@ bot.on("inline_query", async (ctx) => {
       {
         thumbnail_url: `${SHIKIMORI}${anime.image}`,
         caption:
-          `${anime.name}/${anime.russian}\nЭпизоды: ${anime.episodes}\nРейтинг: ${anime.rating}\nОписание: ${anime.description}\n[Продолжать читать в Shikimori...](${SHIKIMORI}${anime.url})`,
+          `${anime.name}/${anime.russian}\nЭпизоды: ${anime.episodes}\nРейтинг: ${anime.rating}\nОписание: ${anime.description}...\n[Продолжать читать в Shikimori...](${SHIKIMORI}${anime.url})`,
         parse_mode: "Markdown",
       },
     );

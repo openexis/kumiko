@@ -21,7 +21,7 @@ async function search_anime(name: string) {
         "status": res.status,
         "license_name": res.license_name_ru,
         "episodes": res.episodes,
-        "description": res.description?.replaceAll(/\[(.*?)\]/g, " ").slice(0,847) + "..."
+        "description": res.description?.replaceAll(/\[(.*?)\]/g, " ").slice(0,847) || "Не существует."
     }
 
 }
