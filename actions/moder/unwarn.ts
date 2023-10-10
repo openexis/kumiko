@@ -5,6 +5,7 @@ import { unWarnUser } from "../../db/warns.ts";
 bot.command("unwarn", async(ctx) => {
     const response: Response = await unWarnUser(ctx.message?.from.id as string | number);
     if (response.status == 200){
-        ctx.reply(response.message)
+        const text = `${response.message}\nThe user: ${ctx.message?.from.first_name}`
+        ctx.reply(text)
     }
 })
