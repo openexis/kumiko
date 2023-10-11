@@ -7,6 +7,10 @@ async function isOwner(bot: Bot, ctx: Context): Promise<boolean> {
     )).status == "creator";
 }
 
+function isReplyingToMe(ctx: Context): boolean {
+    return ctx.message?.reply_to_message?.from?.id == ctx.me.id;
+}
+
 async function isAdmin(bot:Bot , ctx: Context) {
     return (await bot.api.getChatMember(
         ctx.message?.chat.id as number,
@@ -18,4 +22,4 @@ function isReplyingSelf(ctx: Context): boolean {
     return ctx.message?.from.id == ctx.message?.reply_to_message?.from?.id;
 }
 
-export { isOwner, isAdmin, isReplyingSelf }
+export { isOwner, isAdmin, isReplyingSelf, isReplyingToMe }
