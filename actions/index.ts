@@ -1,5 +1,3 @@
-export * from "./check.ts";
-
 export * from "./inline.ts"
 export * from "./anime.ts"
 export * from "./start.ts"
