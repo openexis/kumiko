@@ -1,4 +1,4 @@
-import { Context, Bot } from "../deps.ts"
+import { Context, Bot, NextFunction } from "../deps.ts"
 
 async function isOwner(bot: Bot, ctx: Context): Promise<boolean> {
     return (await bot.api.getChatMember(
@@ -22,4 +22,14 @@ function isReplyingSelf(ctx: Context): boolean {
     return ctx.message?.from.id == ctx.message?.reply_to_message?.from?.id;
 }
 
-export { isOwner, isAdmin, isReplyingSelf, isReplyingToMe }
+async function isBotAdmin(ctx: Context, next: NextFunction) {
+    if((await ctx.getChatMember(
+        ctx.me.id as number
+    )).status != "administrator") {
+        return await ctx.reply("I can't work unless you give me admin permissions.")
+    }
+
+    await next();
+}
+
+export { isOwner, isAdmin, isReplyingSelf, isReplyingToMe, isBotAdmin }
