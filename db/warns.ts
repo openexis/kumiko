@@ -8,10 +8,14 @@ async function warnUser(user_id: string | number): Promise<Response> {
     let warns_count: number = data.value as number;
     warns_count = ++warns_count;
     kv.set(["warns", user_id.toString()], warns_count);
-
-    return {
-      status: 200,
-      message: "The user has been warned. Count of warns: " + warns_count,
+    if(warns_count =>3){
+      await ctx.api.kickChatMember(ctx.chat?.id, userId!);
+      await ctx.api.sendMessage(ADMIN_USER_ID, `${userId} reached the warn limit and has been banned.`);
+    }else{
+      return {
+        status: 200,
+        message: "The user has been warned. Count of warns: " + warns_count,
+      };
     };
   } else {
     kv.set(["warns", user_id.toString()], 1);
