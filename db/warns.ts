@@ -22,7 +22,7 @@ async function warnUser(user_id: string | number): Promise<Response> {
   }
   if(warn_count=>3){
     return{
-      ctx.restrictChatMember(ctx.chat?.id, user.id.toString());
+      messahe: "You reached the max amount of warns!"
     };
   };
 }
