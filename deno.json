@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "check": "deno check --unstable  **/*.ts",
+    "lint": "deno lint --watch",
+    "run": "deno run --watch --unstable -A --env ./mod.ts",
+    "format": "deno fmt --watch",
+    "dev": "deno task check & deno task lint & deno task run & deno task format"
+  }
+}
