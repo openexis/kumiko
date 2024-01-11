@@ -23,14 +23,18 @@ function isReplyingSelf(ctx: Context): boolean {
 }
 
 async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
-  if (
-    (await ctx.getChatMember(
-      ctx.me.id as number,
-    ))?.status != "administrator"
-  ) {
-    await ctx.reply(
-      "I can't work unless you give me admin permissions.",
-    );
+  if (ctx.msg?.chat.type != "private") {
+    if (
+      (await ctx.getChatMember(
+        ctx.me.id as number,
+      ))?.status != "administrator"
+    ) {
+      await ctx.reply(
+        "I can't work unless you give me admin permissions.",
+      );
+    } else {
+      await next();
+    }
   } else {
     await next();
   }
