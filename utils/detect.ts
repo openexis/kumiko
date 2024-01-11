@@ -22,18 +22,18 @@ function isReplyingSelf(ctx: Context): boolean {
   return ctx.message?.from.id == ctx.message?.reply_to_message?.from?.id;
 }
 
-// async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
-//     if (
-//     (await ctx.getChatMember(
-//       ctx.me.id as number,
-//     ))?.status != "administrator"
-//   ) {
-//     await ctx.reply(
-//       "I can't work unless you give me admin permissions.",
-//     );
-//   } else {
-//     await next();
-//   }
-// }
+async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
+  if (
+    (await ctx.getChatMember(
+      ctx.me.id as number,
+    ))?.status != "administrator"
+  ) {
+    await ctx.reply(
+      "I can't work unless you give me admin permissions.",
+    );
+  } else {
+    await next();
+  }
+}
 
-export { isAdmin, isOwner, isReplyingSelf, isReplyingToMe };
+export { isAdmin, isBotAdmin, isOwner, isReplyingSelf, isReplyingToMe };
