@@ -20,12 +20,10 @@ async function warnUser(user_id: string | number): Promise<Response> {
       message: "The user has been warned. Count of warns: 1",
     };
   }
-  if(warn_count=>3){
-    return{
-      messahe: "You reached the max amount of warns!"
-    };
+  if(warn_count => 3){
+    ctx.api.restrictChatMember(ctx.chat?.id, user_id);
   };
-}
+};
 
 async function unWarnUser(user_id: string | number): Promise<Response> {
   const data = await kv.get(["warns", user_id.toString()]);
