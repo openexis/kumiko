@@ -21,7 +21,7 @@ async function warnUser(user_id: string | number): Promise<Response> {
     };
   }
   if(warn_count=>3){
-    await ctx.api.banChatMember(ctx.chat?.id, userId!);
+    await ctx.banChatMember(ctx.chat?.id, userId!);
   };
 }
 
