@@ -11,11 +11,22 @@ function isReplyingToMe(ctx: Context): boolean {
   return ctx.message?.reply_to_message?.from?.id == ctx.me.id;
 }
 
-async function isAdmin(bot: Bot, ctx: Context) {
-  return (await bot.api.getChatMember(
+async function isReplyingToAdmin(ctx: Context): Promise<boolean> {
+  const status = (await ctx.api.getChatMember(
+    ctx.message?.chat.id as number,
+    ctx.message?.reply_to_message?.from?.id as number,
+  )).status;
+
+  return status == "administrator" || status == "creator";
+}
+
+async function isAdmin(ctx: Context) {
+  const status = (await ctx.api.getChatMember(
     ctx.message?.chat.id as number,
     ctx.message?.from.id as number,
-  )).status == "administrator";
+  )).status;
+
+  return status == "administrator" || status == "creator";
 }
 
 function isReplyingSelf(ctx: Context): boolean {
@@ -40,4 +51,11 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
   }
 }
 
-export { isAdmin, isBotAdmin, isOwner, isReplyingSelf, isReplyingToMe };
+export {
+  isAdmin,
+  isBotAdmin,
+  isOwner,
+  isReplyingSelf,
+  isReplyingToAdmin,
+  isReplyingToMe,
+};
