@@ -22,7 +22,7 @@ async function warnUser(user_id: string | number): Promise<Response> {
   }
   if(warn_count=>3){
     return{
-      ctx.banChatMember(ctx.chat?.id,user.id.toString());
+      ctx.restrictChatMember(ctx.chat?.id, user.id.toString());
     };
   };
 }
