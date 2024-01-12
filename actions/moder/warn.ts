@@ -1,6 +1,7 @@
+// deno-lint-ignore-file
 import { bot } from "../../config/bot.ts";
 import { Response } from "../../types/response.ts";
-import { warnUser } from "../../db/warns.ts";
+import { clearWarns, warnUser } from "../../db/warns.ts";
 import {
   isAdmin,
   isReplyingToAdmin,
@@ -20,6 +21,25 @@ bot.command("warn").filter(
       const response: Response = await warnUser(
         ctx.message?.reply_to_message?.from?.id as string | number,
       );
+
+      const warns_count = response.message.match(/\d+/g)
+        ?.[0] as unknown as number;
+
+      if (warns_count >= 3) {
+        await ctx.banChatMember(
+          ctx.message?.reply_to_message?.from?.id as number,
+        );
+
+        await clearWarns(
+          ctx.message?.reply_to_message?.from?.id as string | number,
+        );
+
+        await ctx.api.sendMessage(
+          ctx.msg.chat.id,
+          `The user ${ctx.message?.reply_to_message?.from?.first_name} has reached 3 warns and has been banned.`,
+        );
+        return;
+      }
 
       if (response.status == 200) {
         const text =
