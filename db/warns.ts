@@ -1,6 +1,15 @@
 import { Response } from "../types/response.ts";
 
 const kv = await Deno.openKv();
+
+async function clearWarns(user_id: string | number): Promise<Response> {
+  await kv.delete(["warns", user_id.toString()]);
+  return {
+    status: 200,
+    message: "User's warns have been cleared. Count of warns: 0",
+  };
+}
+
 async function warnUser(user_id: string | number): Promise<Response> {
   const data = await kv.get(["warns", user_id.toString()]);
   // Check if data exists
@@ -8,11 +17,11 @@ async function warnUser(user_id: string | number): Promise<Response> {
     let warns_count: number = data.value as number;
     warns_count = ++warns_count;
     kv.set(["warns", user_id.toString()], warns_count);
-    
+
     return {
-        status: 200,
-        message: "The user has been warned. Count of warns: " + warns_count,
-      };
+      status: 200,
+      message: "The user has been warned. Count of warns: " + warns_count,
+    };
   } else {
     kv.set(["warns", user_id.toString()], 1);
     return {
@@ -20,10 +29,7 @@ async function warnUser(user_id: string | number): Promise<Response> {
       message: "The user has been warned. Count of warns: 1",
     };
   }
-  if(warn_count => 3){
-    ctx.api.restrictChatMember(ctx.chat?.id, user_id);
-  };
-};
+}
 
 async function unWarnUser(user_id: string | number): Promise<Response> {
   const data = await kv.get(["warns", user_id.toString()]);
@@ -44,4 +50,4 @@ async function unWarnUser(user_id: string | number): Promise<Response> {
   }
 }
 
-export { unWarnUser, warnUser };
+export { clearWarns, unWarnUser, warnUser };
