@@ -7,7 +7,9 @@ import { isBotAdmin } from "../utils/detect.ts";
 // import { isBotAdmin } from "../utils/detect.ts";
 
 export const bot = new Bot(Deno.env.get("BOT_TOKEN") as string);
-export const instance = await bot.api.getMe();
+await bot.init();
+
+export const instance = bot.botInfo;
 
 bot.api.setMyCommands([
   { command: "start", description: "Запустить бота." },
