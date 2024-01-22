@@ -1,4 +1,3 @@
-// deno-lint-ignore-file
 import { bot } from "../../config/bot.ts";
 import { Response } from "../../types/response.ts";
 import { clearWarns, warnUser } from "../../db/warns.ts";
@@ -7,12 +6,13 @@ import {
   isReplyingToAdmin,
   isReplyingToMe,
 } from "../../utils/detect.ts";
+import { Context } from "../../deps.ts";
 
 bot.command("warn").filter(
-  async (ctx) => await isAdmin(ctx),
-  async (ctx) => {
+  async (ctx: Context) => await isAdmin(ctx),
+  async (ctx: Context) => {
     if (isReplyingToMe(ctx)) {
-      return ctx.reply("Okay, Should I warn myself? Hmmm...");
+      return await ctx.reply("Okay, Should I warn myself? Hmmm...");
     }
 
     if (await isReplyingToAdmin(ctx)) {
@@ -35,7 +35,7 @@ bot.command("warn").filter(
         );
 
         await ctx.api.sendMessage(
-          ctx.msg.chat.id,
+          ctx.message?.chat.id as string | number,
           `The user ${ctx.message?.reply_to_message?.from?.first_name} has reached 3 warns and has been banned.`,
         );
         return;
