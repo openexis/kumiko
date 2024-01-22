@@ -4,8 +4,6 @@ import "https://deno.land/std@0.201.0/dotenv/load.ts";
 
 import { isBotAdmin } from "../utils/detect.ts";
 
-// import { isBotAdmin } from "../utils/detect.ts";
-
 export const bot = new Bot(Deno.env.get("BOT_TOKEN") as string);
 await bot.init();
 
