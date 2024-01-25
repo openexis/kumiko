@@ -13,6 +13,11 @@ bot.api.setMyCommands([
   { command: "start", description: "Запустить бота." },
   { command: "anime", description: "Искать аниме." },
   { command: "source", description: "Получить ссылку на исходный код." },
+  { command: "help", description: "Показать список команд." },
+  { command: "warn", description: "Выдать предупреждение." },
+  { command: "ban", description: "Забанить пользователя." },
+  { command: "unban", description: "Разбанить пользователя." },
+  { command: "unwarn", description: "Снять предупреждение." },
 ]);
 
 bot.use(autoThread() as unknown as Middleware<Context>);
