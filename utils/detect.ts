@@ -51,10 +51,15 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
   }
 }
 
+async function isReplying(ctx: Context): Promise<boolean> {
+  return await Boolean(ctx.msg?.reply_to_message);
+}
+
 export {
   isAdmin,
   isBotAdmin,
   isOwner,
+  isReplying,
   isReplyingSelf,
   isReplyingToAdmin,
   isReplyingToMe,
