@@ -7,10 +7,16 @@ import {
   isReplyingToMe,
 } from "../../utils/detect.ts";
 import { Context } from "../../deps.ts";
+import { isReplying } from "../../utils/detect.ts";
 
 bot.command("warn").filter(
   async (ctx: Context) => await isAdmin(ctx),
   async (ctx: Context) => {
+    if (!await isReplying(ctx)) {
+      await ctx.reply("Reply to a message.");
+      return;
+    }
+
     if (isReplyingToMe(ctx)) {
       return await ctx.reply("Okay, Should I warn myself? Hmmm...");
     }

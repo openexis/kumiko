@@ -4,13 +4,21 @@ import { Response } from "../../types/response.ts";
 import { unWarnUser } from "../../db/warns.ts";
 import {
   isAdmin,
+  isReplying,
+  isReplyingSelf,
   isReplyingToAdmin,
   isReplyingToMe,
 } from "../../utils/detect.ts";
+import { Context } from "../../deps.ts";
 
 bot.command("unwarn").filter(
-  async (ctx) => isAdmin(ctx),
-  async (ctx) => {
+  async (ctx: Context) => await isAdmin(ctx),
+  async (ctx: Context) => {
+    if (!await isReplying(ctx)) {
+      await ctx.reply("Reply to a message.");
+      return;
+    }
+
     if (isReplyingToMe(ctx)) {
       return await bot.api.sendMessage(
         ctx.message?.chat.id as number,
