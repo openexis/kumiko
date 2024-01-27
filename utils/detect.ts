@@ -52,6 +52,10 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
 }
 
 async function isReplying(ctx: Context): Promise<boolean> {
+  if (ctx.msg?.reply_to_message?.forum_topic_created) {
+    return false;
+  }
+
   return await Boolean(ctx.msg?.reply_to_message);
 }
 
