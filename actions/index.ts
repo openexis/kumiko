@@ -7,6 +7,7 @@ export * from "./help.ts";
 // Moderation commands
 
 export * from "./moder/mute.ts";
+export * from "./moder/unmute.ts";
 export * from "./moder/ban.ts";
 export * from "./moder/unban.ts";
 export * from "./moder/warn.ts";
