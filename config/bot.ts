@@ -18,6 +18,8 @@ bot.api.setMyCommands([
   { command: "ban", description: "Забанить пользователя." },
   { command: "unban", description: "Разбанить пользователя." },
   { command: "unwarn", description: "Снять предупреждение." },
+  { command: "mute", description: "Замутить пользователя." },
+  { command: "unmute", description: "Размутить пользователя." },
 ]);
 
 bot.use(autoThread() as unknown as Middleware<Context>);
