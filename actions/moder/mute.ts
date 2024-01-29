@@ -33,17 +33,22 @@ bot.command("mute").filter(
       await ctx.reply("I can't mute the admins.");
     }
 
+    // Define the permissions object
     const permissions: ChatPermissions = {};
-
+    
+    // Get the time from the message text
     let time = ctx.msg?.text?.split(" ")[1];
-
+    
+    // Set a default time if not provided
     if (time == undefined) {
       time = "1h";
     }
-
+    
     try {
+      // Convert the time to the limit in seconds
       const limit = convertAll(time!.trim() as string) / 1000;
-
+    
+      // Restrict the chat member and notify about the mute
       await ctx.restrictChatMember(
         ctx.msg?.reply_to_message?.from?.id as number,
         permissions,
@@ -60,8 +65,9 @@ bot.command("mute").filter(
         );
       });
     } catch (error) {
+      // Handle TimeError and reply with an error message
       if (error instanceof TimeError) {
-        ctx.reply("Invalid time unit, please use 1m, 1h or 1d", {
+        ctx.reply("Invalid time unit, please use 1m, 1h, or 1d", {
           parse_mode: "Markdown",
         });
       }
