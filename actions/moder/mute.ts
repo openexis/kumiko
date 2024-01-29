@@ -4,6 +4,8 @@ import { isReplyingToAdmin } from "../../utils/detect.ts";
 import { isAdmin, isReplying, isReplyingToMe } from "../../utils/detect.ts";
 import { ChatPermissions } from "../../deps.ts"; // Command to handle mute process
 
+import { TimeError } from "../../types/response.ts";
+
 import { convertAll } from "../../utils/time.ts";
 
 // Command to handle mute process
@@ -39,20 +41,30 @@ bot.command("mute").filter(
       time = "1h";
     }
 
-    await ctx.restrictChatMember(
-      ctx.msg?.reply_to_message?.from?.id as number,
-      permissions,
-      {
-        until_date: convertAll(time!.trim() as string) / 1000,
-      },
-    ).then(() => {
-      ctx.reply(
-        // Notify about the mute with user's first name and id
-        `The user [${ctx.message?.reply_to_message?.from?.first_name}](tg://user?id=${ctx.message?.reply_to_message?.from?.id}) has been muted.`,
+    try {
+      const limit = convertAll(time!.trim() as string) / 1000;
+
+      await ctx.restrictChatMember(
+        ctx.msg?.reply_to_message?.from?.id as number,
+        permissions,
         {
-          parse_mode: "Markdown", // Set parse mode for message formatting
+          until_date: limit,
         },
-      );
-    });
+      ).then(() => {
+        ctx.reply(
+          // Notify about the mute with user's first name and id
+          `The user [${ctx.message?.reply_to_message?.from?.first_name}](tg://user?id=${ctx.message?.reply_to_message?.from?.id}) has been muted.`,
+          {
+            parse_mode: "Markdown", // Set parse mode for message formatting
+          },
+        );
+      });
+    } catch (error) {
+      if (error instanceof TimeError) {
+        ctx.reply("Invalid time unit, please use 1m, 1h or 1d", {
+          parse_mode: "Markdown",
+        });
+      }
+    }
   },
 );
