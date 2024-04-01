@@ -35,19 +35,19 @@ bot.command("mute").filter(
 
     // Define the permissions object
     const permissions: ChatPermissions = {};
-    
+
     // Get the time from the message text
     let time = ctx.msg?.text?.split(" ")[1];
-    
+
     // Set a default time if not provided
     if (time == undefined) {
       time = "1h";
     }
-    
+
     try {
       // Convert the time to the limit in seconds
       const limit = convertAll(time!.trim() as string) / 1000;
-    
+
       // Restrict the chat member and notify about the mute
       await ctx.restrictChatMember(
         ctx.msg?.reply_to_message?.from?.id as number,
