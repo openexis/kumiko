@@ -77,8 +77,8 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
   if (ctx.msg?.chat.type != "private" && !ctx.update.inline_query) {
     if (
       (await ctx.api.getChatMember(
-        ctx.me.id as number,
         ctx.chat!.id,
+        ctx.me.id as number
       ))?.status != "administrator"
     ) {
       await ctx.reply(
