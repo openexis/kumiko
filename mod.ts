@@ -1,4 +1,4 @@
 import { launch } from "./serve.ts";
-import "./actions/index.ts";
+import "./actions/mod.ts";
 
 await launch();
