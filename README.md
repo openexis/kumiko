@@ -1,16 +1,20 @@
 # Kumiko
 
-Kumiko is a versatile Telegram bot written in TypeScript using Deno and the Grammy framework. It serves as both an anime information bot and a moderation tool for Telegram groups.
+Kumiko is a versatile Telegram bot written in TypeScript using Deno and the
+Grammy framework. It serves as both an anime information bot and a moderation
+tool for Telegram groups.
 
 ## Features
 
 ### Anime Information
+
 - Utilizes the Shikimori API to fetch anime details
 - Two ways to search for anime:
   1. Inline mode: `@kumikorobot anime name`
   2. Command: `/anime anime name`
 
 ### Moderation Commands
+
 (For admins and owners - wield your power wisely!)
 
 - `/ban`: Give a troublemaker an extended vacation from the chat
@@ -23,12 +27,14 @@ Kumiko is a versatile Telegram bot written in TypeScript using Deno and the Gram
 Remember: Three strikes and they're out! (3 warnings = automatic ban)
 
 ### User Role Detection
+
 - Uses middlewares to detect and handle:
   - Admin users
   - Owner
   - Regular users
 
 ### Additional Features
+
 - Currency exchange functionality
 
 ## Technology Stack
@@ -40,24 +46,34 @@ Remember: Three strikes and they're out! (3 warnings = automatic ban)
 
 ## Installation
 
-As Kumiko is a Telegram bot, there's no need for end-users to install anything. To add Kumiko to your Telegram group, simply search for `@kumikorobot` on Telegram and start a chat or add it to your group.
+As Kumiko is a Telegram bot, there's no need for end-users to install anything.
+To add Kumiko to your Telegram group, simply search for `@kumikorobot` on
+Telegram and start a chat or add it to your group.
 
 ## Usage
 
 ### Anime Search
-- Inline mode: In any chat, type `@kumiko_bot` followed by the anime name you want to search for.
-- Command mode: In a chat where Kumiko is present, use `/anime` followed by the anime name.
+
+- Inline mode: In any chat, type `@kumiko_bot` followed by the anime name you
+  want to search for.
+- Command mode: In a chat where Kumiko is present, use `/anime` followed by the
+  anime name.
 
 ### Moderation Commands
+
 (Only available for admins and owners)
+
 - `/ban`, `/mute`, `/unban`, `/unmute`: Manage user restrictions
-- `/warn`, `/unwarn`: Manage user warnings
-  Note: 3 warnings result in an automatic ban, resetting the warning count
+- `/warn`, `/unwarn`: Manage user warnings Note: 3 warnings result in an
+  automatic ban, resetting the warning count
 
 ### Currency Exchange
-Simply type an amount followed by a valid currency code. Kumiko will respond with the equivalent amounts in UZS (Uzbek Som) and RUB (Russian Ruble).
+
+Simply type an amount followed by a valid currency code. Kumiko will respond
+with the equivalent amounts in UZS (Uzbek Som) and RUB (Russian Ruble).
 
 Examples:
+
 - `100 USD`
 - `50 EUR`
 - `1000 JPY`
@@ -76,23 +92,28 @@ git clone https://github.com/openexis/kumiko.git
 ```
 
 3. Navigate to the project directory:
+
 ```bash
 cd kumiko
-```   
+```
 
 4. Run the bot locally:
+
 ```bash
 deno run --allow-net mod.ts
 ```
 
 ## Deployment
 
-Kumiko is deployed using Deno Deploy. For deployment instructions, refer to the [Deno Deploy documentation](https://deno.com/deploy/docs).
+Kumiko is deployed using Deno Deploy. For deployment instructions, refer to the
+[Deno Deploy documentation](https://deno.com/deploy/docs).
 
 ## Contributing
 
-Contributions to Kumiko are welcome! Please feel free to submit pull requests, create issues or spread the word.
+Contributions to Kumiko are welcome! Please feel free to submit pull requests,
+create issues or spread the word.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for
+details.

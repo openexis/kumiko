@@ -45,7 +45,7 @@ async function isReplyingToAdmin(ctx: Context): Promise<boolean> {
  * @param {Context} ctx - the context object
  * @return {boolean} true if the user is an administrator or creator, otherwise false
  */
-async function isAdmin(ctx: Context) {
+async function isAdmin(ctx: Context): Promise<boolean> {
   const status = (await ctx.api.getChatMember(
     ctx.message?.chat.id as number,
     ctx.message?.from.id as number,
@@ -74,22 +74,24 @@ function isReplyingSelf(ctx: Context): boolean {
  * @return {Promise<void>} a promise that resolves when the function completes
  */
 async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
-  if (ctx.msg?.chat.type != "private" && !ctx.update.inline_query) {
-    if (
-      (await ctx.api.getChatMember(
-        ctx.chat!.id,
-        ctx.me.id as number,
-      ))?.status != "administrator"
-    ) {
-      await ctx.reply(
-        "I can't work unless you give me admin permissions.",
-      );
-    } else {
-      await next();
-    }
-  } else {
+  if (ctx.msg?.chat.type == "private" || ctx.update.inline_query) {
     await next();
   }
+
+  const member = await ctx.api.getChatMember(
+    ctx.chat!.id,
+    ctx.me.id as number,
+  );
+
+  if (
+    member?.status == "administrator"
+  ) {
+    await next();
+  }
+
+  await ctx.reply(
+    "I can't work unless you give me admin permissions.",
+  );
 }
 
 /**
@@ -98,12 +100,12 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
  * @param {Context} ctx - the context object
  * @return {boolean} true if the message is a reply to another message, false otherwise
  */
-async function isReplying(ctx: Context): Promise<boolean> {
+function isReplying(ctx: Context): boolean {
   if (ctx.msg?.reply_to_message?.forum_topic_created) {
     return false;
   }
 
-  return await Boolean(ctx.msg?.reply_to_message);
+  return Boolean(ctx.msg?.reply_to_message);
 }
 
 export {
