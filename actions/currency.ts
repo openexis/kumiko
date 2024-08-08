@@ -29,11 +29,12 @@ bot.on("message:text", async (ctx) => {
 
   const conversions = targetCurrencies.map(targetCurrency => {
     const convertedAmount = converter.convert(amount, sourceCurrency, targetCurrency);
-    return `${convertedAmount.toFixed(2)} ${targetCurrency}`;
+    const formattedAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: targetCurrency }).format(convertedAmount);
+    return `${formattedAmount}`;
   }).join("\n");
 
-  const answer = `${amount.toLocaleString()} ${sourceCurrency.toUpperCase()} is equivalent to:\n\n${conversions}`;
+  const formattedSourceAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: sourceCurrency.toUpperCase() }).format(amount);
+  const answer = `${formattedSourceAmount} is equivalent to:\n\n${conversions}`;
 
   await ctx.reply(answer);
 });
-
