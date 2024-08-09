@@ -76,6 +76,7 @@ function isReplyingSelf(ctx: Context): boolean {
 async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
   if (ctx.msg?.chat.type == "private" || ctx.update.inline_query) {
     await next();
+    return;
   }
 
   const member = await ctx.api.getChatMember(
@@ -87,6 +88,7 @@ async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
     member?.status == "administrator"
   ) {
     await next();
+    return;
   }
 
   await ctx.reply(
