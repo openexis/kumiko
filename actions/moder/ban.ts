@@ -7,7 +7,7 @@ import { isAdmin, isReplyingToMe } from "../../utils/detect.ts";
 bot.command("ban").filter(
   async (ctx: Context) => await isAdmin(ctx), // Check if user is admin
   async (ctx: Context) => { // Perform ban action
-    if (!await isReplying(ctx)) {
+    if (!isReplying(ctx)) {
       await ctx.reply("Reply to a message."); // Prompt user to reply to a message
       return;
     }
