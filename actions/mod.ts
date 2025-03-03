@@ -5,6 +5,7 @@ export * from "./help.ts";
 
 // Moderation commands
 
+export * from "./moder/admin.ts";
 export * from "./moder/mute.ts";
 export * from "./moder/unmute.ts";
 export * from "./moder/ban.ts";

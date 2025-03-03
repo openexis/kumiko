@@ -15,7 +15,10 @@ bot.on("message:text", async (ctx) => {
   }
 
   const [, amountStr] = text.match(
-    new RegExp(`(\\d+(?:\\.\\d+)?(?:k|m)?)\\s?${sourceCurrency.toLowerCase()}`, "i")
+    new RegExp(
+      `(\\d+(?:\\.\\d+)?(?:k|m)?)\\s?${sourceCurrency.toLowerCase()}`,
+      "i",
+    ),
   ) || [];
 
   let amount = 0;
@@ -32,7 +35,11 @@ bot.on("message:text", async (ctx) => {
   );
 
   const conversions = targetCurrencies.map((targetCurrency) => {
-    const convertedAmount = converter.convert(amount, sourceCurrency, targetCurrency);
+    const convertedAmount = converter.convert(
+      amount,
+      sourceCurrency,
+      targetCurrency,
+    );
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: targetCurrency,
@@ -43,9 +50,7 @@ bot.on("message:text", async (ctx) => {
     style: "currency",
     currency: sourceCurrency.toUpperCase(),
   }).format(amount);
-  const answer =
-    `${formattedSourceAmount} is equivalent to:\n\n${conversions}`;
+  const answer = `${formattedSourceAmount} is equivalent to:\n\n${conversions}`;
 
   await ctx.reply(answer);
 });
-
