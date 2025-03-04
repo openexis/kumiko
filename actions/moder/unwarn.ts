@@ -24,7 +24,7 @@ async function handleUnwarn(ctx: Context): Promise<void> {
 bot
   .filter(async (ctx) => await isAdmin(ctx))
   .filter(async (ctx) => await isReplying(ctx))
-  .filter(async (ctx) => !isReplyingToMe(ctx))
+  .filter(async (ctx) => await !isReplyingToMe(ctx))
   .filter(async (ctx) => !await isReplyingToAdmin(ctx))
   .command("unwarn", async (ctx) => {
     try {

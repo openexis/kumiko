@@ -36,7 +36,7 @@ async function handleWarning(ctx: Context): Promise<void> {
 bot
   .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
   .filter(async (ctx) => await isReplying(ctx)) // Check if replying to a message
-  .filter(async (ctx) => !isReplyingToMe(ctx)) // Check if not replying to self
+  .filter(async (ctx) => await !isReplyingToMe(ctx)) // Check if not replying to self
   .filter(async (ctx) => !await isReplyingToAdmin(ctx)) // Check if not replying to admin
   .command("warn", async (ctx) => {
     try {
