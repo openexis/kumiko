@@ -23,6 +23,7 @@ tool for Telegram groups.
 - `/unmute`: Restore a muted user's voice to the chat
 - `/warn`: Issue a yellow card to a user who's skating on thin ice
 - `/unwarn`: Erase a warning and wipe the slate clean
+- `/admin`: Add new admin
 
 Remember: Three strikes and they're out! (3 warnings = automatic ban)
 
@@ -66,6 +67,7 @@ Telegram and start a chat or add it to your group.
 - `/ban`, `/mute`, `/unban`, `/unmute`: Manage user restrictions
 - `/warn`, `/unwarn`: Manage user warnings Note: 3 warnings result in an
   automatic ban, resetting the warning count
+- `/admin`: Promote user to an admin
 
 ### Currency Exchange
 
