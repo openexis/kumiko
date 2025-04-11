@@ -1,6 +1,5 @@
 import { Response } from "../types/response.ts";
-
-const kv = await Deno.openKv();
+import { kv } from "../config/index.ts";
 
 async function clearWarns(user_id: string | number): Promise<Response> {
   await kv.delete(["warns", user_id.toString()]);
