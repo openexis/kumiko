@@ -1,3 +1,4 @@
+import { handleGithubWebhook } from "./actions/webhook.ts";
 import { bot, instance } from "./config/index.ts";
 import { serve, webhookCallback } from "./deps.ts";
 import "https://deno.land/std@0.201.0/dotenv/load.ts";
@@ -18,6 +19,10 @@ const webhook = async () => {
             console.error(err);
             return new Response("Nope, not working...");
           }
+
+        case "/github-webhook":
+          await handleGithubWebhook(req);
+          return new Response("OK");
         default:
           return new Response("What you're trying to post?");
       }
@@ -34,7 +39,7 @@ const webhook = async () => {
       default:
         return Response.redirect(`https://t.me/${instance.username}`, 302);
     }
-  });
+  }, { port: 3000 });
 };
 
 const polling = async () => {
