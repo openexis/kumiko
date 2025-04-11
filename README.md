@@ -37,6 +37,7 @@ Remember: Three strikes and they're out! (3 warnings = automatic ban)
 ### Additional Features
 
 - Currency exchange functionality
+- Post Github Webhook Updates in a Group
 
 ## Technology Stack
 
@@ -100,6 +101,8 @@ cd kumiko
 ```
 
 4. Run the bot locally:
+
+`You will need to grant more than just a network, also use --unstable-kv flag too.`
 
 ```bash
 deno run --allow-net mod.ts
