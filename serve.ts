@@ -31,7 +31,9 @@ const webhook = async () => {
     switch (url.pathname) {
       case "/webhook":
         try {
-          await bot.api.setWebhook(`https://${url.hostname}/bot`);
+          await bot.api.setWebhook(`https://${url.hostname}/bot`, {
+            drop_pending_updates: true,
+          });
           return new Response("Done. Set");
         } catch (_) {
           return new Response("Couldn't succeed with installing webhook");
@@ -43,7 +45,9 @@ const webhook = async () => {
 };
 
 const polling = async () => {
-  await bot.start();
+  await bot.start({
+    drop_pending_updates: true,
+  });
 };
 
 export const launch = async () => {
