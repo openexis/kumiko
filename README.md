@@ -102,11 +102,18 @@ cd kumiko
 
 4. Run the bot locally:
 
-`You will need to grant more than just a network, also use --unstable-kv flag too.`
-
 ```bash
-deno run --allow-net mod.ts
+deno run -A --env --unstable-kv mod.ts
 ```
+
+### Explanation
+
+- `-A` - Allow all, in case we need access, in our case, we need access to
+  network, kv and env variables, so instead of typing all of that I simply use
+  this flag, the project doesn't have suspicious dependency or piece of code.
+- `--env` - It is required to read env variables by Deno.
+- `--unstable-kv` - As of know, as far as I know, KV feature is unstable, so it
+  requires a special flag to use Deno KV.
 
 ## Deployment
 
