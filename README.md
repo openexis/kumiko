@@ -117,8 +117,65 @@ deno run -A --env --unstable-kv mod.ts
 
 ## Deployment
 
-Kumiko is deployed using Deno Deploy. For deployment instructions, refer to the
-[Deno Deploy documentation](https://deno.com/deploy/docs).
+Kumiko can be easily deployed using Deno Deploy. You will need to have a Deno
+Deploy account. Visit the [website](https://deno.dev) and sign up.
+
+First, fork this repository by clicking **Fork** button or
+[this link](https://github.com/openexis/kumiko/fork).
+
+### In Deno Deploy Dashboard, click on New Project:
+
+<img src="https://i.imgur.com/GWL9BBK.png">
+
+### Then choose the repository by searching.
+
+<img src="https://i.imgur.com/YmdYcCs.png" width=600>
+
+### Choose the branch and the entrypoint, then, click the `Deploy Project` button.
+
+<img src="https://i.imgur.com/GLlymGU.png">
+<img src="https://i.imgur.com/RoqS9bl.png">
+
+### In the first try, you'll see an error.
+
+<img src="https://i.imgur.com/X39nKfq.png">
+
+### You can see the rror by click on `View Logs`.
+
+<img src="https://i.imgur.com/4PgRTvq.png">
+
+### Which clearly tells you to set environment variables. Now click on `Settings`
+
+<img src="https://i.imgur.com/ovhIwXH.png">
+
+### Then set the environment variables like in example.
+
+- Get your token from [BotFather](https://t.me/botfather)
+- `HOST` should be set to `WEBHOOK`
+- Optionally, set your organization name
+
+<img src="https://i.imgur.com/FsHUIQ2.png">
+
+### After setting environmental variables, unlink and relink the GitHub repository.
+
+<img src="https://i.imgur.com/iDCktVD.png">
+<img src="https://i.imgur.com/HFpk3Ul.png">
+
+### Then click on `Deploy Project`
+
+### If you see this, your project is successfully deployed.
+
+<img src="https://i.imgur.com/sZftSi6.png">
+
+### Then copy your project URL, in my case `https://akumarujon-kumiko-86.deno.dev/`. Then navigate to `/webhook` route on browser.
+
+### If you see the same, message your bot is running.
+
+<img src="https://i.imgur.com/1aDnvzF.png">
+
+### It works.
+
+<img src="https://i.imgur.com/rvX7vsd.png">
 
 ## Contributing
 
