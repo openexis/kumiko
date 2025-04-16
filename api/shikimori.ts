@@ -1,16 +1,17 @@
 import axiod from "https://deno.land/x/axiod@0.26.2/mod.ts";
 
-const SHIKIMORI = "https://shikimori.me/";
+const SHIKIMORI = "https://shikimori.one";
 
 async function search_anime(name: string) {
-  const ID_URL = `https://shikimori.me/api/animes?search=${name}`;
+  const ID_URL = `${SHIKIMORI}/api/animes?search=${name}`;
 
   const id_response = await axiod.get(ID_URL);
   const id = id_response.data[0].id;
-  const URL = `https://shikimori.me/api/animes/${id}`;
+  const URL = `${SHIKIMORI}/api/animes/${id}`;
 
   const response = await axiod.get(URL);
   const res = response.data;
+
   return {
     "id": id,
     "name": res.name,
