@@ -6,9 +6,13 @@ bot.on("message:text", async (ctx) => {
   const text = ctx.message.text.toLowerCase();
   const converter = new CurrencyConverter(currency);
 
-  const sourceCurrency = Object.keys(currency.rates).find((code) =>
+  let sourceCurrency = Object.keys(currency.rates).find((code) =>
     text.includes(code.toLowerCase())
   );
+
+  if (!sourceCurrency && text.toLowerCase().includes("rub")) {
+    sourceCurrency = "RUB";
+  }
 
   if (!sourceCurrency) {
     return;
@@ -50,7 +54,8 @@ bot.on("message:text", async (ctx) => {
     style: "currency",
     currency: sourceCurrency.toUpperCase(),
   }).format(amount);
-  const answer = `${formattedSourceAmount} is equivalent to:\n\n${conversions}`;
+  const answer = `${formattedSourceAmount} is equivalent to:\n\n${conversions}`
+    .replaceAll("$", "USD ");
 
   await ctx.reply(answer);
 });
