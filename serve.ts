@@ -3,9 +3,8 @@ import { bot, instance } from "./config/index.ts";
 import { serve, webhookCallback } from "./deps.ts";
 import "https://deno.land/std@0.201.0/dotenv/load.ts";
 
-const handle = webhookCallback(bot, "std/http");
-
 const webhook = async () => {
+  const handle = webhookCallback(bot, "std/http");
   await console.log("[INFO]", `bot is starting on ${Deno.env.get("HOST")}`);
   await serve(async (req) => {
     const url = new URL(req.url);
@@ -31,6 +30,7 @@ const webhook = async () => {
     switch (url.pathname) {
       case "/webhook":
         try {
+          await bot.api.deleteWebhook({ drop_pending_updates: true });
           await bot.api.setWebhook(`https://${url.hostname}/bot`, {
             drop_pending_updates: true,
           });
