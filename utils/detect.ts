@@ -74,7 +74,7 @@ function isReplyingSelf(ctx: Context): boolean {
  * @return {Promise<void>} a promise that resolves when the function completes
  */
 async function isBotAdmin(ctx: Context, next: NextFunction): Promise<void> {
-  if (ctx.msg?.chat.type == "private" || ctx.update.inline_query) {
+  if (ctx.msg?.chat.type == "private" || !ctx.update.message) {
     await next();
     return;
   }
