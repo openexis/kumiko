@@ -16,4 +16,4 @@ export * from "./moder/warn.ts";
 export * from "./moder/unwarn.ts";
 
 // currency convert commands
-export * from "./currency.ts";
+// export * from "./currency.ts";
