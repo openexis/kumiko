@@ -15,9 +15,6 @@ bot.on(":text").filter(
       );
     }
 
-    console.log("User id: ", user_id);
-    console.log("Reply user id: ", reply_user_id);
-
     if (ctx.msg?.text == "+") {
       await increaseKarma(reply_user_id);
 
