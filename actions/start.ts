@@ -1,6 +1,8 @@
 import { bot } from "../config/index.ts";
-import { Context } from "../deps.ts";
+import { MyContext } from "../types/context.ts";
 
-bot.command("start", async (ctx: Context) => {
-  await ctx.reply("Добро пожаловать!");
+bot.command("start", async (ctx: MyContext) => {
+  await ctx.reply(ctx.t("start", {
+    name: ctx.from?.first_name!,
+  }));
 });
