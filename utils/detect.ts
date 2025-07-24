@@ -8,7 +8,7 @@ import { MyContext } from "../types/context.ts";
  * @param {MyContext} ctx - The context object
  * @return {Promise<boolean>} A boolean indicating if the user is the owner
  */
-async function isOwner(bot: Bot, ctx: MyContext): Promise<boolean> {
+async function isOwner(bot: Bot<MyContext>, ctx: MyContext): Promise<boolean> {
   return (await bot.api.getChatMember(
     ctx.message?.chat.id as number,
     ctx.message?.from.id as number,
@@ -93,7 +93,7 @@ async function isBotAdmin(ctx: MyContext, next: NextFunction): Promise<void> {
   }
 
   await ctx.reply(
-    "I can't work unless you give me admin permissions.",
+    ctx.t("i-cant-work-without-admin"),
   );
 }
 

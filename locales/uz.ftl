@@ -1,4 +1,96 @@
 start = Salom {$name}, sizga qanday yordam bera olaman?
+
 help =
-    Menga bir oz matn yuboring, men siz uchun uni qalin qilib bera olaman. 
-    Siz mening tilimni /language buyrug'i yordamida o'zgartirishingiz mumkin.
+    Menga bir oz matn yuboring, men uni siz uchun qalin qilib bera olaman.  
+    Tilni /language buyrug‘i yordamida o‘zgartirishingiz mumkin.
+
+source = https://github.com/openexis/kumiko
+
+increased = oshirdi
+
+decreased = tushirdi
+
+choose-language = Tilni tanlang:
+
+language-changed = Til {$locale} ga o‘zgartirildi.
+
+history = Tarix
+
+history-cleared = Kontekst tarixi tozalandi.
+
+reputation-changed =
+    <a href="tg://user?id={$user_id}">{$user_name}</a> ({$from_user_karma}) <b>{$action}</b> <a href="tg://user?id={$reply_user_id}">{$reply_user_name}</a>ning ({$to_user_karma}) obro‘sini.
+
+cant-change-own-reputation = Siz o‘zingizning obro‘yingizni oshira olmaysiz yoki kamaytira olmaysiz.
+
+reply-to-message = Iltimos, xabarga javob bering.
+
+i-am-already-an-admin = Men allaqachon adminman.
+
+i-dont-have-permission-to-add-admin = Menda yangi admin qo‘shish huquqi yo‘q.
+
+owner-permissions-cannot-be-changed = Egasi ruxsatlarini o‘zgartirib bo‘lmaydi.
+
+user-is-now-admin =
+    <a href="{$user_link}">{$user_name}</a> endi asosiy ruxsatlarga ega admin.
+
+should-i-ban-myself = Yaxshi, o‘zimni ban qilsam bo‘ladimi? Hmmm...
+
+user-banned = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) ban qilindi.
+
+user-unbanned = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) unban qilindi.
+
+should-i-mute-myself = Yaxshi, o‘zimni ovozsizlantirsam bo‘ladimi? Hmmm...
+
+i-cant-mute-admins = Men adminlarni ovozsizlantira olmayman.
+
+user-muted = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) ovozsizlantirildi.
+
+invalid-time-unit = Noto‘g‘ri vaqt birligi. Iltimos, 1m, 1h yoki 1d formatidan foydalaning.
+
+should-i-unmute-myself = Yaxshi, o‘zimni ovozli qilsam bo‘ladimi? Hmmm...
+
+i-cant-unmute-admins = Men adminlarni ovozli qila olmayman.
+
+user-unmuted = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) ovozli qilindi.
+
+unwarn-success =
+    {$message}
+    Foydalanuvchi: {$user_name}
+
+unwarn-error = Ogohlantirishni olib tashlashda xatolik yuz berdi.
+
+user-banned-after-3-warns =
+    Foydalanuvchi {$user_name} 3 ta ogohlantirish oldi va ban qilindi.
+
+warn-success =
+    {$message}
+    Foydalanuvchi: {$user_name}
+
+warn-error = Ogohlantirishni berishda xatolik yuz berdi.
+
+github-org-not-set = Siz .env faylida hech qanday GitHub tashkilotini ko‘rsatmagansiz.
+
+only-admins-can-use = Bu buyruqdan faqat adminlar foydalanishi mumkin!
+
+thread-set-for-webhooks = Bu mavzu GitHub veb-xuklari uchun o‘rnatildi!
+
+i-cant-work-without-admin = Menga admin huquqlari berilmaguncha ishlay olmayman.
+
+currency-conversion =
+    {$source_amount} quyidagilarga teng:
+
+    {$conversions}
+
+prompt-answer =
+    So‘rov: <b>{$prompt}</b>
+
+    <b>Javob:</b>  
+    {$answer}
+
+anime_info =
+    {$name} / {$russian}  
+    Episodlar: {$episodes}  
+    Reyting: {$rating}  
+    Tavsif: {$description}...  
+    <a href="{$shikimori}{$url}">Shikimori’da o‘qishni davom eting</a>

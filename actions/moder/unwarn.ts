@@ -7,30 +7,32 @@ import {
   isReplyingToAdmin,
   isReplyingToMe,
 } from "../../utils/detect.ts";
-import { Context } from "../../deps.ts";
+import { MyContext } from "../../types/context.ts";
 
 // Function to handle the unwarning logic
-async function handleUnwarn(ctx: Context): Promise<void> {
+async function handleUnwarn(ctx: MyContext): Promise<void> {
   const userId = ctx.message?.reply_to_message?.from?.id as number;
   const response: Response = await unWarnUser(userId);
 
   if (response.status === 200) {
-    const text =
-      `${response.message}\nThe user: ${ctx.message?.reply_to_message?.from?.first_name}`;
+    const text = ctx.t("unwarn-success", {
+      message: response.message,
+      user_name: ctx.message?.reply_to_message?.from?.first_name!,
+    });
     await ctx.reply(text);
   }
 }
 
 bot
-  .filter(async (ctx) => await isAdmin(ctx))
-  .filter(async (ctx) => await isReplying(ctx))
-  .filter(async (ctx) => await !isReplyingToMe(ctx))
-  .filter(async (ctx) => !await isReplyingToAdmin(ctx))
-  .command("unwarn", async (ctx) => {
+  .filter(async (ctx: MyContext) => await isAdmin(ctx))
+  .filter(async (ctx: MyContext) => await isReplying(ctx))
+  .filter(async (ctx: MyContext) => await !isReplyingToMe(ctx))
+  .filter(async (ctx: MyContext) => !await isReplyingToAdmin(ctx))
+  .command("unwarn", async (ctx: MyContext) => {
     try {
       await handleUnwarn(ctx);
     } catch (error) {
       console.error("Error handling unwarn:", error);
-      await ctx.reply("An error occurred while processing the unwarn.");
+      await ctx.reply(ctx.t("unwarn-error"));
     }
   });

@@ -1,6 +1,7 @@
 import { bot } from "../config/bot.ts";
 import { currency } from "../api/mod.ts";
 import { CurrencyConverter } from "../utils/converter.ts";
+import { MyContext } from "../types/context.ts";
 
 bot.on("message:text", async (ctx) => {
   const text = ctx.message.text.toLowerCase();
@@ -54,8 +55,10 @@ bot.on("message:text", async (ctx) => {
     style: "currency",
     currency: sourceCurrency.toUpperCase(),
   }).format(amount);
-  const answer = `${formattedSourceAmount} is equivalent to:\n\n${conversions}`
-    .replaceAll("$", "USD ");
+  const answer = ctx.t("currency-conversion", {
+    source_amount: formattedSourceAmount,
+    conversions: conversions,
+  }).replaceAll("$", "USD ");
 
   await ctx.reply(answer);
 });

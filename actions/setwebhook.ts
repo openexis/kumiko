@@ -1,18 +1,18 @@
 import { bot } from "../config/index.ts";
-import { Context } from "../deps.ts";
+import { MyContext } from "../types/context.ts";
 import { isAdmin, isOwner } from "../utils/detect.ts";
 import { kv } from "../config/index.ts";
 
-bot.filter((ctx: Context) => ["group", "supergroup"].includes(ctx.chat?.type!))
-  .command("set", async (ctx: Context) => {
+bot.filter((ctx: MyContext) => ["group", "supergroup"].includes(ctx.chat?.type!))
+  .command("set", async (ctx: MyContext) => {
     if (!Deno.env.get("GITHUB_ORG")) {
       return await ctx.reply(
-        "You haven't set any GitHub organization in .env file.",
+        ctx.t("github-org-not-set"),
       );
     }
 
     if (!await isAdmin(ctx) || !await isOwner(bot, ctx)) {
-      return await ctx.reply("Only admins can use this command!");
+      return await ctx.reply(ctx.t("only-admins-can-use"));
     }
 
     await kv.set(["thread_id"], {
@@ -20,5 +20,5 @@ bot.filter((ctx: Context) => ["group", "supergroup"].includes(ctx.chat?.type!))
       thread_id: ctx.message?.message_thread_id,
     });
 
-    await ctx.reply("The thread is set for GitHub webhooks!");
+    await ctx.reply(ctx.t("thread-set-for-webhooks"));
   });

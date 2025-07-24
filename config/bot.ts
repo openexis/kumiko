@@ -1,4 +1,4 @@
-import { Bot, Context, Middleware, NextFunction } from "../deps.ts";
+import { Bot, Middleware, NextFunction } from "../deps.ts";
 import { I18n } from "../deps.ts";
 
 import { autoThread } from "https://raw.githubusercontent.com/grammyjs/auto-thread/main/src/auto-thread.ts";

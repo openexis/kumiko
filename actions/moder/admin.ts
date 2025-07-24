@@ -1,14 +1,14 @@
 import { ChatMemberAdministrator } from "https://deno.land/x/grammy_types@v3.2.0/manage.ts";
 import { bot } from "../../config/index.ts";
-import { Context } from "../../deps.ts";
+import { MyContext } from "../../types/context.ts";
 import { isAdmin, isReplying, isReplyingToMe } from "../../utils/detect.ts";
 
 bot.command("admin").filter(
-  async (ctx: Context) => await isAdmin(ctx),
-  async (ctx: Context) => {
-    if (!isReplying(ctx)) return await ctx.reply("Reply to a message.");
+  async (ctx: MyContext) => await isAdmin(ctx),
+  async (ctx: MyContext) => {
+    if (!isReplying(ctx)) return await ctx.reply(ctx.t("reply-to-message"));
 
-    if (isReplyingToMe(ctx)) return await ctx.reply("I'm already an admin.");
+    if (isReplyingToMe(ctx)) return await ctx.reply(ctx.t("i-am-already-an-admin"));
 
     const bot_member = await bot.api.getChatMember(
       ctx.chat?.id!,
@@ -16,7 +16,7 @@ bot.command("admin").filter(
     ) as ChatMemberAdministrator;
 
     if (!bot_member.can_promote_members) {
-      return await ctx.reply("I don't have a permission to add a new admin.");
+      return await ctx.reply(ctx.t("i-dont-have-permission-to-add-admin"));
     }
 
     const user = ctx.message?.reply_to_message?.from;
@@ -29,7 +29,7 @@ bot.command("admin").filter(
     console.log(member.status);
 
     if (member.status == "creator") {
-      return await ctx.reply("Owner's permissions can not be changed.");
+      return await ctx.reply(ctx.t("owner-permissions-cannot-be-changed"));
     }
 
     await bot.api.promoteChatMember(ctx.chat?.id!, user?.id!, {
@@ -51,11 +51,11 @@ bot.command("admin").filter(
     }
 
     await ctx.reply(
-      `<a href="${
-        member.user.username
-          ? `https://t.me/${member.user.username}`
-          : `tg://openmessage?chat_id=${member.user.id}`
-      }">${member.user.first_name}</a> is now admin with basic permissions.`,
+      ctx.t("user-is-now-admin", {
+        user_link:
+          `https://t.me/${member.user.username}`,
+        user_name: member.user.first_name,
+      }),
       { parse_mode: "HTML", disable_web_page_preview: true },
     );
 

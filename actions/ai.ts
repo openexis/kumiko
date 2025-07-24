@@ -1,6 +1,6 @@
 import { bot } from "../config/bot.ts";
 import { clearHistory, getHistory, saveHistory } from "../config/kv.ts";
-import { Context } from "../deps.ts";
+import { MyContext } from "../types/context.ts";
 
 interface ContentPart {
   text: string;
@@ -24,7 +24,7 @@ const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
 const GEMINI_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
-bot.command("ai", async (ctx: Context) => {
+bot.command("ai", async (ctx: MyContext) => {
   const prompt = ctx.msg?.text?.split("ai")[1].trim();
   const userId = ctx.chat?.id!;
   const history = await getHistory(userId);
@@ -101,25 +101,26 @@ bot.command("ai", async (ctx: Context) => {
   await saveHistory(userId, history);
 
   ctx.reply(
-    `Prompt: <b>${prompt}</b>\n\n<b>Answer:</b> \n\n${
-      prompt_response.replaceAll("  *  ", " - ")
-    }`,
+    ctx.t("prompt-answer", {
+      prompt: prompt!,
+      answer: prompt_response.replaceAll("  *  ", " - "),
+    }),
     {
       parse_mode: "HTML",
     },
   );
 });
 
-bot.command("context", async (ctx: Context) => {
+bot.command("context", async (ctx: MyContext) => {
   const history = await getHistory(ctx.from?.id!);
 
   console.log("History: ", history);
 
-  ctx.reply("History");
+  ctx.reply(ctx.t("history"));
 });
 
-bot.command("reset", async (ctx: Context) => {
+bot.command("reset", async (ctx: MyContext) => {
   await clearHistory(ctx.chat!.id!);
 
-  ctx.reply("Context history is cleared.");
+  ctx.reply(ctx.t("history-cleared"));
 });

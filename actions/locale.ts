@@ -1,5 +1,6 @@
 import { bot, kv } from "../config/index.ts";
 import { InlineKeyboard } from "../deps.ts";
+import { MyContext } from "../types/context.ts";
 
 const locales = [
   {
@@ -24,8 +25,8 @@ locales.map((locale: { code: string; name: string; emoji: string }) => {
   keyboard.text(`${locale.name} ${locale.emoji}`, locale.code).row();
 });
 
-bot.command("lang", async (ctx) => {
-  await ctx.reply("Choose a language:", {
+bot.command("lang", async (ctx: MyContext) => {
+  await ctx.reply(ctx.t("choose-language"), {
     reply_markup: keyboard,
   });
 });
@@ -35,7 +36,7 @@ bot.on("callback_query", async (ctx) => {
   await kv.set(["locale", ctx.chat!.id.toString()], locale);
 
   await ctx.answerCallbackQuery({
-    text: `Language changed to ${locale}`,
+    text: ctx.t("language-changed", { locale: locale! }),
     show_alert: true,
   });
 });
