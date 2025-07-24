@@ -1,8 +1,22 @@
 start = Salom {$name}, sizga qanday yordam bera olaman?
 
-help =
-    Menga bir oz matn yuboring, men uni siz uchun qalin qilib bera olaman.  
-    Tilni /language buyrug‘i yordamida o‘zgartirishingiz mumkin.
+help-commands =
+    <b>Mavjud buyruqlar ro'yxati:</b>
+
+    /start - Botni ishga tushurish
+    /anime - Anime qidirish
+    /source - Manba kodini olish
+    /help - Ushbu xabarni ko‘rsatish
+    /lang - Bot tilini o‘zgartirish
+
+    <b>Moderatorlar uchun:</b>
+
+    /ban - Foydalanuvchini bloklash
+    /unban - Foydalanuvchining blokini olib tashlash
+    /warn - Ogohlantirish berish
+    /unwarn - Ogohlantirishni olib tashlash
+    /mute - Foydalanuvchini ovozsizlantirish
+    /unmute - Ovozini qayta yoqish
 
 source = https://github.com/openexis/kumiko
 

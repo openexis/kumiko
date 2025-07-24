@@ -1,8 +1,23 @@
 start = Hi {$name}, how can I help you today?
 
-help =
-    Send me a message, and I’ll make it bold for you.
-    You can also change my language using the /language command.
+help-commands =
+    <b>List of available commands:</b>
+
+    /start - Start the bot
+    /anime - Search for anime
+    /source - Get the source code
+    /help - Show this message
+    /lang - Change the language of the bot
+
+    <b>For moderators:</b>
+
+    /ban - Ban a user
+    /unban - Unban a user
+    /warn - Warn a user
+    /unwarn - Remove warning from a user
+    /mute - Mute a user
+    /unmute - Unmute a user
+
 
 source = Source code: { $url }
 
