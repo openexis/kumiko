@@ -48,13 +48,13 @@ owner-permissions-cannot-be-changed = Egasi ruxsatlarini o‘zgartirib bo‘lmay
 user-is-now-admin =
     <a href="{$user_link}">{$user_name}</a> endi asosiy ruxsatlarga ega admin.
 
-should-i-ban-myself = Yaxshi, o‘zimni ban qilsam bo‘ladimi? Hmmm...
+should-i-ban-myself = Qiziqarli narsa etaman, bu sizni qo'lingizdan kelmaydi.
 
 user-banned = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) ban qilindi.
 
 user-unbanned = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) unban qilindi.
 
-should-i-mute-myself = Yaxshi, o‘zimni ovozsizlantirsam bo‘ladimi? Hmmm...
+should-i-mute-myself = Qiziqarli narsa etaman, bu sizni qo'lingizdan kelmaydi.
 
 i-cant-mute-admins = Men adminlarni ovozsizlantira olmayman.
 
@@ -66,7 +66,7 @@ should-i-unmute-myself = Yaxshi, o‘zimni ovozli qilsam bo‘ladimi? Hmmm...
 
 i-cant-unmute-admins = Men adminlarni ovozli qila olmayman.
 
-user-unmuted = Foydalanuvchi [{$user_name}](tg://user?id={$user_id}) ovozli qilindi.
+user-unmuted = Foydalanuvchi [{$user_name}](tg://user?id={$user_id})ga gapirish huquqi qaytarildi.
 
 unwarn-success =
     {$message}
@@ -104,7 +104,7 @@ prompt-answer =
 
 anime_info =
     {$name} / {$russian}  
-    Episodlar: {$episodes}  
+    Epizodlar: {$episodes}  
     Reyting: {$rating}  
     Tavsif: {$description}...  
     <a href="{$shikimori}{$url}">Shikimori’da o‘qishni davom eting</a>

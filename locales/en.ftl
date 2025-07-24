@@ -49,13 +49,13 @@ owner-permissions-cannot-be-changed = The owner's permissions can't be changed.
 user-is-now-admin =
     <a href="{$user_link}">{$user_name}</a> is now an admin with basic permissions.
 
-should-i-ban-myself = Hmm… Should I ban myself?
+should-i-ban-myself = I'll let you in on a secret: you can't do this.
 
 user-banned = The user [{$user_name}](tg://user?id={$user_id}) has been banned.
 
 user-unbanned = The user [{$user_name}](tg://user?id={$user_id}) has been unbanned.
 
-should-i-mute-myself = Hmm… Should I mute myself?
+should-i-mute-myself = I'll let you in on a secret: you can't do this.
 
 i-cant-mute-admins = I can’t mute admins.
 
