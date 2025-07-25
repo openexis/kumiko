@@ -108,3 +108,14 @@ anime_info =
     Рейтинг: {$rating}  
     Описание: {$description}...  
     <a href="{$shikimori}{$url}">Продолжить чтение на Shikimori</a>
+
+start-description = Запустить бота.
+anime-description = Искать аниме.
+source-description = Получить ссылку на исходный код.
+help-description = Показать список команд.
+warn-description = Выдать предупреждение.
+ban-description = Забанить пользователя.
+unban-description = Разбанить пользователя.
+unwarn-description = Снять предупреждение.
+mute-description = Замутить пользователя.
+unmute-description = Размутить пользователя.

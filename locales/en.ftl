@@ -108,3 +108,14 @@ anime_info =
     Rating: {$rating}
     Description: {$description}...
     <a href="{$shikimori}{$url}">Continue reading on Shikimori</a>
+
+start-description = Start the bot.
+anime-description = Search for anime.
+source-description = Get the source code link.
+help-description = Show the list of commands.
+warn-description = Issue a warning.
+ban-description = Ban a user.
+unban-description = Unban a user.
+unwarn-description = Remove a warning.
+mute-description = Mute a user.
+unmute-description = Unmute a user.

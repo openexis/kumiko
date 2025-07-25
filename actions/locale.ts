@@ -1,6 +1,7 @@
 import { bot, kv } from "../config/index.ts";
 import { InlineKeyboard } from "../deps.ts";
 import { MyContext } from "../types/context.ts";
+import { setCommands } from "../utils/setcommands.ts";
 
 const locales = [
   {
@@ -34,6 +35,8 @@ bot.command("lang", async (ctx: MyContext) => {
 bot.on("callback_query", async (ctx) => {
   const locale = ctx.callbackQuery.data;
   await kv.set(["locale", ctx.chat!.id.toString()], locale);
+
+  await setCommands(ctx, locale);
 
   await ctx.answerCallbackQuery({
     text: ctx.t("language-changed", { locale: locale! }),

@@ -7,6 +7,7 @@ import "https://deno.land/std@0.201.0/dotenv/load.ts";
 import { isBotAdmin } from "../utils/detect.ts";
 import { MyContext } from "../types/context.ts";
 import { getLocale } from "../db/locale.ts";
+import { setCommands } from "../utils/setcommands.ts";
 
 export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") as string);
 await bot.init();
@@ -40,6 +41,10 @@ bot.use(async (ctx: MyContext, next: NextFunction) => {
   const locale = await getLocale(ctx.chat!.id);
   await ctx.i18n.useLocale(locale);
   // await ctx.i18n.setLocale(locale);
+
+  // Set my commands
+  await setCommands(ctx, locale);
+
   await next();
 });
 
@@ -54,5 +59,5 @@ bot.use(async (ctx: MyContext, next: NextFunction) => {
   await next();
 });
 
-bot.use(autoThread() as unknown as Middleware<Context>);
+bot.use(autoThread() as unknown as Middleware<MyContext>);
 bot.use(isBotAdmin);

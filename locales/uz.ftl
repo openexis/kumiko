@@ -108,3 +108,14 @@ anime_info =
     Reyting: {$rating}  
     Tavsif: {$description}...  
     <a href="{$shikimori}{$url}">Shikimori’da o‘qishni davom eting</a>
+
+start-description = Botni ishga tushirish.
+anime-description = Anime qidirish.
+source-description = Manba kodiga havola olish.
+help-description = Buyruqlar ro'yxatini ko'rsatish.
+warn-description = Ogohlantirish berish.
+ban-description = Foydalanuvchini bloklash.
+unban-description = Foydalanuvchining blokini olib tashlash.
+unwarn-description = Ogohlantirishni olib tashlash.
+mute-description = Foydalanuvchini ovozsiz qilish.
+unmute-description = Foydalanuvchini ovozini qayta yoqish.
