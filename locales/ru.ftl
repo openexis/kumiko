@@ -48,13 +48,13 @@ owner-permissions-cannot-be-changed = Права владельца нельзя
 user-is-now-admin =
     <a href="{$user_link}">{$user_name}</a> теперь администратор с базовыми правами.
 
-should-i-ban-myself = Ладно, мне забанить себя? Хм...
+should-i-ban-myself = Открою тебе секрет, ты сможешь это сделать.
 
 user-banned = Пользователь [{$user_name}](tg://user?id={$user_id}) был забанен.
 
 user-unbanned = Пользователь [{$user_name}](tg://user?id={$user_id}) был разбанен.
 
-should-i-mute-myself = Ладно, мне замутить себя? Хм...
+should-i-mute-myself = Открою тебе секрет, ты сможешь это сделать.
 
 i-cant-mute-admins = Я не могу мутить администраторов.
 
