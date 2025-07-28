@@ -23,19 +23,6 @@ await i18n.loadLocalesDir("locales");
 bot.use(i18n);
 export const instance = bot.botInfo;
 
-bot.api.setMyCommands([
-  { command: "start", description: "Запустить бота." },
-  { command: "anime", description: "Искать аниме." },
-  { command: "source", description: "Получить ссылку на исходный код." },
-  { command: "help", description: "Показать список команд." },
-  { command: "warn", description: "Выдать предупреждение." },
-  { command: "ban", description: "Забанить пользователя." },
-  { command: "unban", description: "Разбанить пользователя." },
-  { command: "unwarn", description: "Снять предупреждение." },
-  { command: "mute", description: "Замутить пользователя." },
-  { command: "unmute", description: "Размутить пользователя." },
-]);
-
 // i18n Detection
 bot.use(async (ctx: MyContext, next: NextFunction) => {
   const locale = await getLocale(ctx.chat!.id);
