@@ -119,3 +119,4 @@ unban-description = Unban a user.
 unwarn-description = Remove a warning.
 mute-description = Mute a user.
 unmute-description = Unmute a user.
+lang-description = Change the language.

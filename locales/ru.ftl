@@ -119,3 +119,4 @@ unban-description = Разбанить пользователя.
 unwarn-description = Снять предупреждение.
 mute-description = Замутить пользователя.
 unmute-description = Размутить пользователя.
+lang-description = Изменить язык.

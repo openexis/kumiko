@@ -119,3 +119,4 @@ unban-description = Foydalanuvchining blokini olib tashlash.
 unwarn-description = Ogohlantirishni olib tashlash.
 mute-description = Foydalanuvchini ovozsiz qilish.
 unmute-description = Foydalanuvchini ovozini qayta yoqish.
+lang-description = Tilni o'zgartirish.
