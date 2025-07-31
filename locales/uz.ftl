@@ -33,7 +33,7 @@ history = Tarix
 history-cleared = Kontekst tarixi tozalandi.
 
 reputation-changed =
-    <a href="tg://user?id={$user_id}">{$user_name}</a> ({$from_user_karma}) <b>{$action}</b> <a href="tg://user?id={$reply_user_id}">{$reply_user_name}</a>ning ({$to_user_karma}) obro‘sini.
+    <a href="tg://user?id={$user_id}">{$user_name}</a> ({$from_user_karma}) <a href="tg://user?id={$reply_user_id}">{$reply_user_name}</a>ning ({$to_user_karma}) reytingini <b>{$action}</b>.
 
 cant-change-own-reputation = Siz o‘zingizning obro‘yingizni oshira olmaysiz yoki kamaytira olmaysiz.
 
