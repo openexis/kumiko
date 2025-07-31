@@ -21,17 +21,14 @@ bot.on(":text").filter(
     const today = new Date().toISOString().slice(0, 10);
     const key = `${user_id}:${reply_user_id}:${today}`;
 
-    const karmaGivenToday = dailyKarmaMap.get(key) ?? 0;
+    const karmaChangesToday = dailyKarmaMap.get(key) ?? 0;
 
-    if (karmaGivenToday >= 5) {
-      return await ctx.reply("You can't give more than 5 karma to the same person in a single day.");
+    if (karmaChangesToday >= 5) {
+      return await ctx.reply("❗ You can't change this user's karma more than 5 times per day.");
     }
 
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
-    
-    if (karma_amount > 0) {
-      dailyKarmaMap.set(key, karmaGivenToday + 1);
-    }
+    dailyKarmaMap.set(key, karmaChangesToday + 1);
 
     await updateKarma(reply_user_id, karma_amount);
 
