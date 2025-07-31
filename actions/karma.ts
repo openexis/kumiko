@@ -1,7 +1,8 @@
 import { bot } from "../config/index.ts";
 import { MyContext } from "../types/context.ts";
-
 import { getKarma, updateKarma } from "../db/karma.ts";
+
+const dailyKarmaMap = new Map<string, number>();
 
 bot.on(":text").filter(
   (ctx: MyContext) => /^(\+|-)\1*$/.test(ctx.msg!.text!),
@@ -13,11 +14,25 @@ bot.on(":text").filter(
     const user_id = ctx.from?.id!;
     const reply_user_id = ctx.msg?.reply_to_message?.from?.id as number;
 
-    if (user_id == reply_user_id) {
+    if (user_id === reply_user_id) {
       return await ctx.reply(ctx.t("cant-change-own-reputation"));
     }
 
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `${user_id}:${reply_user_id}:${today}`;
+
+    const karmaGivenToday = dailyKarmaMap.get(key) ?? 0;
+
+    if (karmaGivenToday >= 5) {
+      return await ctx.reply("You can't give more than 5 karma to the same person in a single day.");
+    }
+
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
+    
+    if (karma_amount > 0) {
+      dailyKarmaMap.set(key, karmaGivenToday + 1);
+    }
+
     await updateKarma(reply_user_id, karma_amount);
 
     const fromUserKarma = await getKarma(user_id);
