@@ -25,6 +25,8 @@ increased = increased
 
 decreased = decreased
 
+cant-change-user-karma = You can't change user's rating more than 5 times for day.
+
 choose-language = Please choose a language:
 
 language-changed = Language changed to {$locale}.

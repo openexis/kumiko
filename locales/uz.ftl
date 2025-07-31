@@ -24,6 +24,8 @@ increased = oshirdi
 
 decreased = tushirdi
 
+cant-change-user-karma = Siz ushbu foydalanuvchi reytingini bir kunda 5 martadan ziyod o'zgartira olmaysiz.
+
 choose-language = Tilni tanlang:
 
 language-changed = Til {$locale} ga o‘zgartirildi.
