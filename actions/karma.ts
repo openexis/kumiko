@@ -24,7 +24,7 @@ bot.on(":text").filter(
     const karmaChangesToday = dailyKarmaMap.get(key) ?? 0;
 
     if (karmaChangesToday >= 5) {
-      return await ctx.reply("❗ You can't change this user's karma more than 5 times per day.");
+      return await ctx.reply("cant-change-user-karma");
     }
 
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
