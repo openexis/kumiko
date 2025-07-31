@@ -2,14 +2,12 @@ import { bot } from "../config/index.ts";
 import { MyContext } from "../types/context.ts";
 import { getKarma, updateKarma } from "../db/karma.ts";
 
-const dailyKarmaMap = new Map<string, number>();
+const dailyUserChangeMap = new Map<string, number>();
 
 bot.on(":text").filter(
   (ctx: MyContext) => /^(\+|-)\1*$/.test(ctx.msg!.text!),
   async (ctx: MyContext) => {
-    if (!ctx.message?.reply_to_message) {
-      return;
-    }
+    if (!ctx.message?.reply_to_message) return;
 
     const user_id = ctx.from?.id!;
     const reply_user_id = ctx.msg?.reply_to_message?.from?.id as number;
@@ -18,17 +16,18 @@ bot.on(":text").filter(
       return await ctx.reply(ctx.t("cant-change-own-reputation"));
     }
 
-    const today = new Date().toISOString().slice(0, 10);
-    const key = `${user_id}:${reply_user_id}:${today}`;
+    const today = new Date().toISOString().slice(0, 10); 
+    const userKey = `${user_id}:${today}`;
 
-    const karmaChangesToday = dailyKarmaMap.get(key) ?? 0;
+    const changesToday = dailyUserChangeMap.get(userKey) ?? 0;
 
-    if (karmaChangesToday >= 5) {
+    if (changesToday >= 5) {
       return await ctx.reply("cant-change-user-karma");
     }
 
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
-    dailyKarmaMap.set(key, karmaChangesToday + 1);
+
+    dailyUserChangeMap.set(userKey, changesToday + 1);
 
     await updateKarma(reply_user_id, karma_amount);
 
