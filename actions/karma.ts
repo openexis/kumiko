@@ -22,7 +22,7 @@ bot.on(":text").filter(
     const changesToday = dailyUserChangeMap.get(userKey) ?? 0;
 
     if (changesToday >= 5) {
-      return await ctx.reply("cant-change-user-karma");
+      return await ctx.reply(ctx.t("cant-change-user-karma"));
     }
 
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
