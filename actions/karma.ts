@@ -1,6 +1,7 @@
 import { bot } from "../config/index.ts";
 import { MyContext } from "../types/context.ts";
-import { getKarma, updateKarma } from "../db/karma.ts";
+import { getKarma, updateKarma, isUserAtLimit,
+  incrementUserChangeCount, } from "../db/karma.ts";
 
 const dailyUserChangeMap = new Map<string, number>();
 
@@ -27,7 +28,11 @@ bot.on(":text").filter(
 
     const karma_amount = ctx.msg?.text?.startsWith("+") ? 1 : -1;
 
-    dailyUserChangeMap.set(userKey, changesToday + 1);
+    if (await isUserAtLimit(user_id)) {
+      return await ctx.reply(ctx.t("cant-change-user-karma"))
+    }
+
+    await incrementUserChangeCount(user_id);
 
     await updateKarma(reply_user_id, karma_amount);
 

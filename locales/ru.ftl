@@ -24,6 +24,8 @@ source = https://github.com/openexis/kumiko
 increased = повысил(а)
 decreased = понизил(а)
 
+cant-change-user-karma = Ты не можешь изменять рейтинг этого пользователя более чем 5 раз в день.
+
 choose-language = Выберите язык:
 
 language-changed = Язык изменён на {$locale}.

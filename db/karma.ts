@@ -25,4 +25,25 @@ async function getKarma(user_id: string | number): Promise<number> {
   return data.value;
 }
 
-export { getKarma, updateKarma };
+function getToday(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+async function getUserChangeCount(user_id: number): Promise<number> {
+  const key = ["karma_limit", user_id.toString(), getToday()];
+  const res = await kv.get<number>(key);
+  return res.value ?? 0;
+}
+
+async function incrementUserChangeCount(user_id: number): Promise<void> {
+  const key = ["karma_limit", user_id.toString(), getToday()];
+  const current = await getUserChangeCount(user_id);
+  await kv.set(key, current + 1);
+}
+
+async function isUserAtLimit(user_id: number, maxPerDay = 5): Promise<boolean> {
+  const current = await getUserChangeCount(user_id);
+  return current >= maxPerDay;
+}
+
+export { getKarma, updateKarma, getUserChangeCount, incrementUserChangeCount, isUserAtLimit};
