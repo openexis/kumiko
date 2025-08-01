@@ -2,9 +2,9 @@ import { bot } from "../config/index.ts";
 import { MyContext } from "../types/context.ts";
 import {
   getKarma,
-  updateKarma,
-  isUserAtLimit,
   incrementUserChangeCount,
+  isUserAtLimit,
+  updateKarma,
 } from "../db/karma.ts";
 
 const kv = await Deno.openKv();
@@ -16,7 +16,7 @@ bot.on(":text").filter(
     if (!ctx.message?.reply_to_message) return;
 
     const user_id = ctx.from?.id!;
-    const reply_user = ctx.msg.reply_to_message.from!;
+    const reply_user = ctx.msg!.reply_to_message!.from!;
     const reply_user_id = reply_user.id;
 
     if (user_id === reply_user_id) {
@@ -27,13 +27,13 @@ bot.on(":text").filter(
       return await ctx.reply(ctx.t("cant-change-user-karma"));
     }
 
-    const karma_amount = ctx.msg.text.startsWith("+") ? 1 : -1;
+    const karma_amount = ctx.msg!.text!.startsWith("+") ? 1 : -1;
 
     await incrementUserChangeCount(user_id);
 
-    const reply_user_name = reply_user.first_name || "User";
+    const reply_user_name = reply_user.first_name;
 
-    await updateKarma(reply_user_id, karma_amount, reply_user_name);
+    await updateKarma(reply_user_id, karma_amount);
 
     const fromUserKarma = await getKarma(user_id);
     const toUserKarma = await getKarma(reply_user_id);
@@ -87,7 +87,10 @@ bot.command("top", async (ctx: MyContext) => {
   let reply = "🏆 <b>Top 10 Users by Karma</b>\n\n";
   for (let i = 0; i < top10.length; i++) {
     const user = top10[i];
-    reply += `${i + 1}. <a href="tg://user?id=${user.id}">${user.name}</a> — <b>${user.karma}</b>\n`;
+    const getChatUser = await bot.api.getChat(user.id);
+    reply += `${
+      i + 1
+    }. <a href="tg://user?id=${user.id}">${getChatUser.first_name}</a> — <b>${user.karma}</b>\n`;
   }
 
   await ctx.reply(reply, { parse_mode: "HTML" });
