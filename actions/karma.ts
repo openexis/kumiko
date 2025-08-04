@@ -7,14 +7,15 @@ import {
   updateKarma,
 } from "../db/karma.ts";
 
-const kv = await Deno.openKv();
+import { kv } from "../config/index.ts";
 
 // Handle + / - karma changes
-bot.on(":text").filter(
+bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx: MyContext) => /^(\+|-)\1*$/.test(ctx.msg!.text!),
   async (ctx: MyContext) => {
     if (!ctx.message?.reply_to_message) return;
 
+    const chat_id = ctx.chatId!;
     const user_id = ctx.from?.id!;
     const reply_user = ctx.msg!.reply_to_message!.from!;
     const reply_user_id = reply_user.id;
@@ -28,15 +29,13 @@ bot.on(":text").filter(
     }
 
     const karma_amount = ctx.msg!.text!.startsWith("+") ? 1 : -1;
-
-    await incrementUserChangeCount(user_id);
-
     const reply_user_name = reply_user.first_name;
 
-    await updateKarma(reply_user_id, karma_amount);
+    await incrementUserChangeCount(user_id);
+    await updateKarma(chat_id, reply_user_id, karma_amount);
 
-    const fromUserKarma = await getKarma(user_id);
-    const toUserKarma = await getKarma(reply_user_id);
+    const fromUserKarma = await getKarma(chat_id, user_id);
+    const toUserKarma = await getKarma(chat_id, reply_user_id);
 
     const action = karma_amount === 1 ? ctx.t("increased") : ctx.t("decreased");
 
@@ -58,23 +57,14 @@ bot.on(":text").filter(
 );
 
 bot.command("top", async (ctx: MyContext) => {
-  const topUsers: { id: string; name: string; karma: number }[] = [];
+  const topUsers: { id: string; karma: number }[] = [];
 
-  for await (const entry of kv.list({ prefix: ["karma"] })) {
+  for await (
+    const entry of kv.list<number>({ prefix: ["karma", ctx.chatId!] })
+  ) {
     const userId = entry.key[1] as string;
 
-    let karma: number;
-    let name: string;
-
-    if (typeof entry.value === "number") {
-      karma = entry.value;
-      name = "User";
-    } else {
-      karma = entry.value?.score ?? 0;
-      name = entry.value?.name ?? "User";
-    }
-
-    topUsers.push({ id: userId, name, karma });
+    topUsers.push({ id: userId, karma: entry.value });
   }
 
   topUsers.sort((a, b) => b.karma - a.karma);
