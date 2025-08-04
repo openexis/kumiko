@@ -60,9 +60,11 @@ bot.command("top", async (ctx: MyContext) => {
   const topUsers: { id: string; karma: number }[] = [];
 
   for await (
-    const entry of kv.list<number>({ prefix: ["karma", ctx.chatId!] })
+    const entry of kv.list<number>({
+      prefix: ["karma", ctx.chatId!.toString()],
+    })
   ) {
-    const userId = entry.key[1] as string;
+    const userId = entry.key[2] as string;
 
     topUsers.push({ id: userId, karma: entry.value });
   }
