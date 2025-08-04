@@ -13,18 +13,19 @@ bot.command("unban").filter(
       await ctx.reply(ctx.t("should-i-ban-myself"));
       return;
     }
-    await ctx.unbanChatMember(ctx.msg?.reply_to_message?.from?.id as number).then(
-      () => {
-        ctx.reply(
-          ctx.t("user-unbanned", {
-            user_name: ctx.message?.reply_to_message?.from?.first_name!,
-            user_id: ctx.message?.reply_to_message?.from?.id!,
-          }),
-          {
-            parse_mode: "Markdown",
-          },
-        );
-      },
-    );
+    await ctx.unbanChatMember(ctx.msg?.reply_to_message?.from?.id as number)
+      .then(
+        () => {
+          ctx.reply(
+            ctx.t("user-unbanned", {
+              user_name: ctx.message?.reply_to_message?.from?.first_name!,
+              user_id: ctx.message?.reply_to_message?.from?.id!,
+            }),
+            {
+              parse_mode: "Markdown",
+            },
+          );
+        },
+      );
   },
 );

@@ -3,7 +3,9 @@ import { MyContext } from "../types/context.ts";
 import { isAdmin, isOwner } from "../utils/detect.ts";
 import { kv } from "../config/index.ts";
 
-bot.filter((ctx: MyContext) => ["group", "supergroup"].includes(ctx.chat?.type!))
+bot.filter((ctx: MyContext) =>
+  ["group", "supergroup"].includes(ctx.chat?.type!)
+)
   .command("set", async (ctx: MyContext) => {
     if (!Deno.env.get("GITHUB_ORG")) {
       return await ctx.reply(

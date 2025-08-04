@@ -8,7 +8,9 @@ bot.command("admin").filter(
   async (ctx: MyContext) => {
     if (!isReplying(ctx)) return await ctx.reply(ctx.t("reply-to-message"));
 
-    if (isReplyingToMe(ctx)) return await ctx.reply(ctx.t("i-am-already-an-admin"));
+    if (isReplyingToMe(ctx)) {
+      return await ctx.reply(ctx.t("i-am-already-an-admin"));
+    }
 
     const bot_member = await bot.api.getChatMember(
       ctx.chat?.id!,
@@ -52,8 +54,7 @@ bot.command("admin").filter(
 
     await ctx.reply(
       ctx.t("user-is-now-admin", {
-        user_link:
-          `https://t.me/${member.user.username}`,
+        user_link: `https://t.me/${member.user.username}`,
         user_name: member.user.first_name,
       }),
       { parse_mode: "HTML", disable_web_page_preview: true },

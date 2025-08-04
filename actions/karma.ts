@@ -11,7 +11,8 @@ import { kv } from "../config/index.ts";
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
-  (ctx: MyContext) => /^(\+|-)\1*$/.test(ctx.msg!.text!),
+  (ctx: MyContext) =>
+    /^(\+|-)\1*$/.test(ctx.msg!.text!) || ["thanks"].includes(ctx.msg?.text!),
   async (ctx: MyContext) => {
     if (!ctx.message?.reply_to_message) return;
 

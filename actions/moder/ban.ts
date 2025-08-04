@@ -21,14 +21,14 @@ bot.command("ban").filter(
       ctx.msg?.reply_to_message?.from?.id as number,
     ).then(() => {
       ctx.reply(
-          ctx.t("user-banned", {
-            user_name: ctx.message?.reply_to_message?.from?.first_name!,
-            user_id: ctx.message?.reply_to_message?.from?.id!,
-          }),
-          {
-            parse_mode: "Markdown",
-          },
-        );
+        ctx.t("user-banned", {
+          user_name: ctx.message?.reply_to_message?.from?.first_name!,
+          user_id: ctx.message?.reply_to_message?.from?.id!,
+        }),
+        {
+          parse_mode: "Markdown",
+        },
+      );
     });
   },
 );
