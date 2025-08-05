@@ -77,7 +77,7 @@ bot.command("top", async (ctx: MyContext) => {
     return await ctx.reply("📉 Nobody has karma yet.");
   }
 
-  let reply = "🏆 <b>Top 10 Users by Karma</b>\n\n";
+  let reply = `🏆 <b>${ctx.t("top-10-users-by-karma")}</b>\n\n`;
   for (let i = 0; i < top10.length; i++) {
     const user = top10[i];
     const getChatUser = await bot.api.getChat(user.id);

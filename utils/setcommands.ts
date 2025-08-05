@@ -14,6 +14,7 @@ async function setCommands(ctx: MyContext, locale: string = "en") {
     { command: "mute", description: ctx.t("mute-description") },
     { command: "unmute", description: ctx.t("unmute-description") },
     { command: "lang", description: ctx.t("lang-description") },
+    { command: "top", description: ctx.t("top-description") },
   ]);
 }
 

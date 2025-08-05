@@ -1,5 +1,7 @@
 start = Hi {$name}, how can I help you today?
 
+top-10-users-by-karma = Top 10 Users by Karma
+
 help-commands =
     <b>List of available commands:</b>
 
@@ -8,6 +10,7 @@ help-commands =
     /source - Get the source code
     /help - Show this message
     /lang - Change the language of the bot
+    /top - ListTop 10 users by karma
 
     <b>For moderators:</b>
 
@@ -122,3 +125,4 @@ unwarn-description = Remove a warning.
 mute-description = Mute a user.
 unmute-description = Unmute a user.
 lang-description = Change the language.
+top-description = ListTop 10 users by karma
