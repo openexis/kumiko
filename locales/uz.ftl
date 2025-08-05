@@ -10,7 +10,7 @@ help-commands =
     /source - Manba kodini olish
     /help - Ushbu xabarni ko‘rsatish
     /lang - Bot tilini o‘zgartirish
-    /top - Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatga oling
+    /top - Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatini oling
 
     <b>Moderatorlar uchun:</b>
 
@@ -125,4 +125,4 @@ unwarn-description = Ogohlantirishni olib tashlash.
 mute-description = Foydalanuvchini ovozsiz qilish.
 unmute-description = Foydalanuvchini ovozini qayta yoqish.
 lang-description = Tilni o'zgartirish.
-top-description = Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatga oling
+top-description = Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatini oling
