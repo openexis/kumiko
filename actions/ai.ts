@@ -26,7 +26,11 @@ const GEMINI_URL =
 
 bot.command("ai", async (ctx: MyContext) => {
   const prompt = ctx.msg?.text?.split("ai")[1].trim();
-  const userId = ctx.chat?.id!;
+  const userId = ctx.chat?.id;
+  if (userId === undefined) {
+    ctx.reply("Unable to determine user ID.");
+    return;
+  }
   const history = await getHistory(userId);
 
   const contextString = history.length > 0
@@ -112,7 +116,12 @@ bot.command("ai", async (ctx: MyContext) => {
 });
 
 bot.command("context", async (ctx: MyContext) => {
-  const history = await getHistory(ctx.from?.id!);
+  const userId = ctx.from?.id;
+  if (userId === undefined) {
+    ctx.reply("Unable to determine user ID.");
+    return;
+  }
+  const history = await getHistory(userId);
 
   console.log("History: ", history);
 

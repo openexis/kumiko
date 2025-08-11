@@ -35,7 +35,7 @@ const webhook = async () => {
             drop_pending_updates: true,
           });
           return new Response("Done. Set");
-        } catch (_) {
+        } catch {
           return new Response("Couldn't succeed with installing webhook");
         }
       default:

@@ -4,7 +4,7 @@ import { isAdmin, isOwner } from "../utils/detect.ts";
 import { kv } from "../config/index.ts";
 
 bot.filter((ctx: MyContext) =>
-  ["group", "supergroup"].includes(ctx.chat?.type!)
+  ["group", "supergroup"].includes(ctx.chat?.type ?? "")
 )
   .command("set", async (ctx: MyContext) => {
     if (!Deno.env.get("GITHUB_ORG")) {

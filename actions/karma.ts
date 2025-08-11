@@ -12,12 +12,12 @@ import { kv } from "../config/index.ts";
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx: MyContext) =>
-    /^(\+|-)\1*$/.test(ctx.msg!.text!) || ["thanks"].includes(ctx.msg?.text!),
+    /^(\+|-)\1*$/.test(ctx.msg!.text!) || ["thanks"].includes(ctx.msg!.text!),
   async (ctx: MyContext) => {
     if (!ctx.message?.reply_to_message) return;
 
     const chat_id = ctx.chatId!;
-    const user_id = ctx.from?.id!;
+    const user_id = ctx.from!.id!;
     const reply_user = ctx.msg!.reply_to_message!.from!;
     const reply_user_id = reply_user.id;
 
@@ -43,7 +43,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
     await ctx.reply(
       ctx.t("reputation-changed", {
         user_id: user_id,
-        user_name: ctx.from?.first_name!,
+        user_name: ctx.from!.first_name!,
         from_user_karma: fromUserKarma!,
         action: action,
         reply_user_id: reply_user_id,

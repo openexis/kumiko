@@ -17,7 +17,7 @@ async function handleUnwarn(ctx: MyContext): Promise<void> {
   if (response.status === 200) {
     const text = ctx.t("unwarn-success", {
       message: response.message,
-      user_name: ctx.message?.reply_to_message?.from?.first_name!,
+      user_name: ctx.message?.reply_to_message?.from?.first_name ?? "",
     });
     await ctx.reply(text);
   }
@@ -26,7 +26,7 @@ async function handleUnwarn(ctx: MyContext): Promise<void> {
 bot
   .filter(async (ctx: MyContext) => await isAdmin(ctx))
   .filter(async (ctx: MyContext) => await isReplying(ctx))
-  .filter(async (ctx: MyContext) => await !isReplyingToMe(ctx))
+  .filter(async (ctx: MyContext) => !(await isReplyingToMe(ctx)))
   .filter(async (ctx: MyContext) => !await isReplyingToAdmin(ctx))
   .command("unwarn", async (ctx: MyContext) => {
     try {
