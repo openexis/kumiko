@@ -58,7 +58,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
 );
 
 bot.command("top", async (ctx: MyContext) => {
-  const topUsers: { id: string; karma: number }[] = [];
+  const topUsers: { id: number; karma: number }[] = [];
 
   for await (
     const entry of kv.list<number>({
@@ -67,7 +67,7 @@ bot.command("top", async (ctx: MyContext) => {
   ) {
     const userId = entry.key[2] as string;
 
-    topUsers.push({ id: userId, karma: entry.value });
+    topUsers.push({ id: parseInt(userId), karma: entry.value });
   }
 
   topUsers.sort((a, b) => b.karma - a.karma);
@@ -80,10 +80,16 @@ bot.command("top", async (ctx: MyContext) => {
   let reply = `🏆 <b>${ctx.t("top-10-users-by-karma")}</b>\n\n`;
   for (let i = 0; i < top10.length; i++) {
     const user = top10[i];
-    const getChatUser = await bot.api.getChat(user.id);
+    const chatId = ctx.chatId;
+
+    if (chatId == undefined) {
+      return;
+    }
+
+    const getChatUser = await bot.api.getChatMember(chatId, user.id);
     reply += `${
       i + 1
-    }. <a href="tg://user?id=${user.id}">${getChatUser.first_name}</a> — <b>${user.karma}</b>\n`;
+    }. <a href="tg://user?id=${user.id}">${getChatUser.user.first_name}</a> — <b>${user.karma}</b>\n`;
   }
 
   await ctx.reply(reply, { parse_mode: "HTML" });
