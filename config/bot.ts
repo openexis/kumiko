@@ -25,7 +25,13 @@ export const instance = bot.botInfo;
 
 // i18n Detection
 bot.use(async (ctx: MyContext, next: NextFunction) => {
-  const locale = await getLocale(ctx.chat!.id);
+  const chatId = ctx.chatId;
+
+  if (chatId == undefined) {
+    return;
+  }
+
+  const locale = await getLocale(chatId);
   await ctx.i18n.useLocale(locale);
   // await ctx.i18n.setLocale(locale);
 

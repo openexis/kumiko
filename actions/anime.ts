@@ -8,6 +8,14 @@ bot.command("anime", async (ctx: MyContext) => {
   const anime_name: string = ctx.update.message?.text?.split("anime")[1]
     .trim() as string;
 
+  if (anime_name == "@" + ctx.me.username) {
+    return;
+  }
+
+  if (anime_name == "") {
+    return await ctx.reply("Anime name can not be empty.");
+  }
+
   const anime = await search_anime(anime_name);
 
   await ctx.api.sendPhoto(
