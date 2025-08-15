@@ -1,10 +1,9 @@
 import { bot } from "../../config/bot.ts";
-import { MyContext } from "../../types/context.ts";
 import { isAdmin, isReplyingToMe } from "../../utils/detect.ts";
 
 bot.command("ban").filter(
-  async (ctx: MyContext) => await isAdmin(ctx),
-  async (ctx: MyContext) => {
+  async (ctx) => await isAdmin(ctx),
+  async (ctx) => {
     const reply_to_message = ctx.message?.reply_to_message;
 
     if (reply_to_message == undefined) {

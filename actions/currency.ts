@@ -1,7 +1,6 @@
 import { bot } from "../config/bot.ts";
 import { currency } from "../api/mod.ts";
 import { CurrencyConverter } from "../utils/converter.ts";
-import { MyContext } from "../types/context.ts";
 
 bot.on("message:text", async (ctx) => {
   const text = ctx.message.text.toLowerCase();

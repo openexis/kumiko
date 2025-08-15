@@ -1,5 +1,4 @@
 import { bot } from "../../config/bot.ts";
-import { MyContext } from "../../types/context.ts";
 import { isReplyingToAdmin } from "../../utils/detect.ts";
 import { isAdmin, isReplyingToMe } from "../../utils/detect.ts";
 import { ChatPermissions } from "../../deps.ts";
@@ -9,8 +8,8 @@ import { TimeError } from "../../types/response.ts";
 import { convertAll } from "../../utils/time.ts";
 
 bot.command("mute").filter(
-  async (ctx: MyContext) => await isAdmin(ctx),
-  async (ctx: MyContext) => {
+  async (ctx) => await isAdmin(ctx),
+  async (ctx) => {
     const reply_to_message = ctx.message?.reply_to_message;
 
     if (reply_to_message == undefined) {

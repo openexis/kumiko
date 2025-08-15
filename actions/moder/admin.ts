@@ -1,14 +1,13 @@
 import { ChatMemberAdministrator } from "https://deno.land/x/grammy_types@v3.2.0/manage.ts";
 import { bot } from "../../config/index.ts";
-import { MyContext } from "../../types/context.ts";
 import { isAdmin, isReplyingToMe } from "../../utils/detect.ts";
 
 bot
   .chatType(["group", "supergroup"])
   .command("admin")
   .filter(
-    async (ctx: MyContext) => await isAdmin(ctx),
-    async (ctx: MyContext) => {
+    async (ctx) => await isAdmin(ctx),
+    async (ctx) => {
       // if (!isReplying(ctx)) return await ctx.reply(ctx.t("reply-to-message"));
       const user = ctx.message?.reply_to_message?.from;
       if (user == undefined) {
