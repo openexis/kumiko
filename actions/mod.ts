@@ -1,4 +1,6 @@
 export * from "./karma.ts";
+export * from "./currency.ts";
+
 export * from "./anime.ts";
 export * from "./start.ts";
 export * from "./source.ts";
@@ -16,6 +18,3 @@ export * from "./moder/ban.ts";
 export * from "./moder/unban.ts";
 export * from "./moder/warn.ts";
 export * from "./moder/unwarn.ts";
-
-// currency convert commands
-// export * from "./currency.ts";

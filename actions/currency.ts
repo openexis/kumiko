@@ -1,63 +1,51 @@
 import { bot } from "../config/bot.ts";
-import { currency } from "../api/mod.ts";
-import { CurrencyConverter } from "../utils/converter.ts";
+import { rates } from "../utils/converter.ts";
 
 bot.on("message:text", async (ctx) => {
-  const text = ctx.message.text.toLowerCase();
-  const converter = new CurrencyConverter(currency);
+  const text = ctx.message.text.trim().toLowerCase();
 
-  let sourceCurrency = Object.keys(currency.rates).find((code) =>
-    text.includes(code.toLowerCase())
+  const match = text.match(
+    /\b(\d+(?:\.\d+)?)\s([a-z]{3})\b|\b([a-z]{3})\s(\d+(?:\.\d+)?)\b/,
   );
-
-  if (!sourceCurrency && text.toLowerCase().includes("rub")) {
-    sourceCurrency = "RUB";
-  }
-
-  if (!sourceCurrency) {
+  if (!match) {
     return;
   }
 
-  const [, amountStr] = text.match(
-    new RegExp(
-      `(\\d+(?:\\.\\d+)?(?:k|m)?)\\s?${sourceCurrency.toLowerCase()}`,
-      "i",
-    ),
-  ) || [];
+  const amount = parseFloat(match[1] || match[4]);
+  const sourceCurrency = (match[2] || match[3]).toUpperCase();
 
-  let amount = 0;
-  if (amountStr.includes("k")) {
-    amount = Number(amountStr.replace("k", "")) * 1000;
-  } else if (amountStr.includes("m")) {
-    amount = Number(amountStr.replace("m", "")) * 1000000;
-  } else {
-    amount = Number(amountStr.replace(".", ""));
-  }
+  try {
+    const exchangeRates = await rates(sourceCurrency);
 
-  const targetCurrencies = ["USD", "UZS", "RUB"].filter((c) =>
-    c !== sourceCurrency
-  );
-
-  const conversions = targetCurrencies.map((targetCurrency) => {
-    const convertedAmount = converter.convert(
-      amount,
-      sourceCurrency,
-      targetCurrency,
+    const TARGET_CURRENCIES = ["USD", "EUR", "UZS", "RUB", "KZT"];
+    const currenciesToConvertTo = TARGET_CURRENCIES.filter(
+      (c) => c !== sourceCurrency,
     );
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: targetCurrency,
-    }).format(convertedAmount);
-  }).join("\n");
 
-  const formattedSourceAmount = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: sourceCurrency.toUpperCase(),
-  }).format(amount);
-  const answer = ctx.t("currency-conversion", {
-    source_amount: formattedSourceAmount,
-    conversions: conversions,
-  }).replaceAll("$", "USD ");
+    if (currenciesToConvertTo.length === 0) {
+      return;
+    }
 
-  await ctx.reply(answer);
+    let responseMessage = `**${amount} ${sourceCurrency} is:**\n\n`;
+
+    for (const targetCode of currenciesToConvertTo) {
+      const rate = exchangeRates[targetCode];
+      if (rate) {
+        const convertedAmount = amount * rate;
+        const formattedAmount = convertedAmount.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        responseMessage += `• ${formattedAmount} **${targetCode}**\n`;
+      }
+    }
+
+    await ctx.reply(responseMessage, { parse_mode: "Markdown" });
+  } catch (error) {
+    console.error(
+      `Could not find rates for '${sourceCurrency}'. Message ignored. Error: ${error}`,
+    );
+
+    return;
+  }
 });

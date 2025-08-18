@@ -1,7 +1,8 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@std/path@1.0.9": "1.0.9"
+    "jsr:@std/path@1.0.9": "1.0.9",
+    "npm:@faker-js/faker@*": "9.9.0"
   },
   "jsr": {
     "@std/path@1.0.9": {

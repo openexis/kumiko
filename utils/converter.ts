@@ -1,47 +1,36 @@
-import { ExchangeRates } from "../types/exchange.ts";
+export interface ExchangeRates {
+  result: string;
+  provider: string;
+  documentation: string;
+  terms_of_use: string;
+  time_last_update_unix: number;
+  time_last_update_utc: string;
+  time_next_update_unix: number;
+  time_next_update_utc: string;
+  time_eol_unix: number;
+  base_code: string;
+  rates: { [key: string]: number };
+}
+const URL = `https://open.er-api.com/v6/latest/`;
 
-export class CurrencyConverter {
-  private rates: { [key: string]: number };
-  private base: string;
+export async function convert(
+  amount: number,
+  fromCurrency: string,
+  toCurrency: string,
+): Promise<number> {
+  const url = URL + `${fromCurrency}`;
+  const response = await fetch(url);
+  const json: ExchangeRates = await response.json();
 
-  constructor(data: ExchangeRates) {
-    this.rates = data.rates;
-    this.base = data.base;
-  }
+  return amount * json.rates[toCurrency];
+}
 
-  //   convert(amount: number, fromCurrency: string, toCurrency: string): number {
-  //     if (fromCurrency === this.base) {
-  //       return amount * this.rates[toCurrency];
-  //     } else if (toCurrency === this.base) {
-  //       return amount / this.rates[fromCurrency];
-  //     } else {
-  //       const baseAmount = amount / this.rates[fromCurrency];
-  //       return baseAmount * this.rates[toCurrency];
-  //     }
-  //   }
+export async function rates(
+  currencyCode: string,
+): Promise<{ [key: string]: number }> {
+  const url = URL + currencyCode;
+  const response = await fetch(url);
+  const json: ExchangeRates = await response.json();
 
-  convert(amount: number, fromCurrency: string, toCurrency: string): number {
-    const convertedAmount = this.convertAmount(
-      amount,
-      fromCurrency,
-      toCurrency,
-    );
-
-    return Number(convertedAmount.toFixed(2));
-  }
-
-  private convertAmount(
-    amount: number,
-    fromCurrency: string,
-    toCurrency: string,
-  ): number {
-    if (fromCurrency === this.base) {
-      return amount * this.rates[toCurrency];
-    } else if (toCurrency === this.base) {
-      return amount / this.rates[fromCurrency];
-    } else {
-      const baseAmount = amount / this.rates[fromCurrency];
-      return baseAmount * this.rates[toCurrency];
-    }
-  }
+  return json.rates;
 }
