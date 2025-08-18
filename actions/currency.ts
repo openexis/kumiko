@@ -17,7 +17,7 @@ bot.on("message:text", async (ctx) => {
   try {
     const exchangeRates = await rates(sourceCurrency);
 
-    const TARGET_CURRENCIES = ["USD", "EUR", "UZS", "RUB", "KZT"];
+    const TARGET_CURRENCIES = ["USD", "EUR", "UZS", "RUB"];
     const currenciesToConvertTo = TARGET_CURRENCIES.filter(
       (c) => c !== sourceCurrency,
     );
