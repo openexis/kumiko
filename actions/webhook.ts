@@ -4,10 +4,16 @@ import { decideResponse } from "../utils/decidewebhook.ts";
 export async function handleGithubWebhook(req: Request): Promise<void> {
   const body = await req.json();
 
+  const organization = Deno.env.get("GITHUB_ORG");
+
+  if (organization == undefined) {
+    return;
+  }
+
   // Ignore IN ANY CASE, it's update from another organization
   if (
-    Deno.env.get("GITHUB_ORG")?.toLowerCase() !=
-      (body.organization.login as string).toLowerCase()
+    organization.toLowerCase() !=
+      body.organization.login.toString().toLowerCase()
   ) return;
 
   const id_credentials = await kv.get<{ chat_id: number; thread_id: number }>([
