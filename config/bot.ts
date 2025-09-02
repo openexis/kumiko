@@ -1,7 +1,7 @@
-import { Bot, Middleware, NextFunction } from "../deps.ts";
+import { Bot } from "../deps.ts";
 import { I18n } from "../deps.ts";
 
-import { autoThread } from "https://raw.githubusercontent.com/grammyjs/auto-thread/main/src/auto-thread.ts";
+// import { autoThread } from "https://raw.githubusercontent.com/grammyjs/auto-thread/main/src/auto-thread.ts";
 import "https://deno.land/std@0.201.0/dotenv/load.ts";
 
 import { isBotAdmin } from "../utils/detect.ts";
@@ -14,8 +14,7 @@ await bot.init();
 
 // @ts-ignore deno-lint-ignore
 const i18n = new I18n<MyContext>({
-  defaultLocale: "en", // see below for more information
-  // Load all translation files from locales/. (Not working in Deno Deploy.)
+  defaultLocale: "en",
 });
 
 await i18n.loadLocalesDir("locales");
@@ -24,7 +23,7 @@ bot.use(i18n);
 export const instance = bot.botInfo;
 
 // i18n Detection
-bot.use(async (ctx: MyContext, next: NextFunction) => {
+bot.use(async (ctx, next) => {
   const chatId = ctx.chatId;
 
   if (chatId == undefined) {
@@ -42,7 +41,7 @@ bot.use(async (ctx: MyContext, next: NextFunction) => {
 });
 
 // Debugger
-bot.use(async (ctx: MyContext, next: NextFunction) => {
+bot.use(async (ctx, next) => {
   console.log(
     `%c[INFO]`,
     "color: green",
@@ -52,5 +51,5 @@ bot.use(async (ctx: MyContext, next: NextFunction) => {
   await next();
 });
 
-bot.use(autoThread() as unknown as Middleware<MyContext>);
+// bot.use(autoThread() as unknown as Middleware<MyContext>);
 bot.use(isBotAdmin);

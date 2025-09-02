@@ -1,5 +1,4 @@
 import { bot } from "../config/index.ts";
-import { MyContext } from "../types/context.ts";
 import {
   getKarma,
   incrementUserChangeCount,
@@ -11,9 +10,11 @@ import { kv } from "../config/index.ts";
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
-  (ctx: MyContext) =>
+  (ctx) =>
     /^(\+|-)\1*$/.test(ctx.msg!.text!) || ["thanks"].includes(ctx.msg!.text!),
-  async (ctx: MyContext) => {
+  async (ctx) => {
+    console.log("HEY");
+
     if (!ctx.message?.reply_to_message) return;
 
     const chat_id = ctx.chatId!;
@@ -57,7 +58,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
   },
 );
 
-bot.command("top", async (ctx: MyContext) => {
+bot.command("top", async (ctx) => {
   const topUsers: { id: number; karma: number }[] = [];
 
   for await (
