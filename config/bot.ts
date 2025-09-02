@@ -32,9 +32,7 @@ bot.use(async (ctx, next) => {
 
   const locale = await getLocale(chatId);
   await ctx.i18n.useLocale(locale);
-  // await ctx.i18n.setLocale(locale);
 
-  // Set my commands
   await setCommands(ctx, locale);
 
   await next();

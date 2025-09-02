@@ -10,8 +10,8 @@ tool for Telegram groups.
 
 - Utilizes the Shikimori API to fetch anime details
 - Two ways to search for anime:
-  1. Inline mode: `@kumikorobot anime name`
-  2. Command: `/anime anime name`
+  1. Inline mode: `@kumikorobot name`
+  2. Command: `/anime name`
 
 ### Moderation Commands
 
