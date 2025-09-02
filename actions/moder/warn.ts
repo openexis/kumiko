@@ -36,6 +36,7 @@ async function handleWarning(ctx: MyContext): Promise<void> {
       ctx.t("user-banned-after-3-warns", {
         user_name: replied_user.first_name,
       }),
+      { message_thread_id: ctx.message?.message_thread_id },
     );
     return;
   }

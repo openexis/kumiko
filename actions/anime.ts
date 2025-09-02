@@ -31,6 +31,7 @@ bot.command("anime", async (ctx: MyContext) => {
         shikimori: SHIKIMORI,
         url: anime.url,
       }),
+      message_thread_id: ctx.message?.message_thread_id,
       parse_mode: "HTML",
     },
   );
