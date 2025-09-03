@@ -1,5 +1,5 @@
 import { bot, kv } from "../config/index.ts";
-import { decideResponse } from "../utils/decidewebhook.ts";
+import { decideResponse } from "../utils/decideWebhook.ts";
 
 export async function handleGithubWebhook(req: Request): Promise<void> {
   const body = await req.json();
@@ -10,7 +10,7 @@ export async function handleGithubWebhook(req: Request): Promise<void> {
     return;
   }
 
-  // Ignore IN ANY CASE, it's update from another organization
+  // Ignore IN ANY CASE, it's an update from another organization
   if (
     organization.toLowerCase() !=
       body.organization.login.toString().toLowerCase()
@@ -23,8 +23,8 @@ export async function handleGithubWebhook(req: Request): Promise<void> {
   if (!id_credentials || !id_credentials.value) return;
 
   const { chat_id, thread_id } = id_credentials.value;
-  const x_github_event = req.headers.get("X-GITHUB-EVENT") as string;
-  const response = await decideResponse(x_github_event, body);
+
+  const response = decideResponse(body);
 
   if (response.text == "OK") return;
 

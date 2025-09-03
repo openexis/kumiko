@@ -1,7 +1,7 @@
 import { bot, kv } from "../config/index.ts";
 import { InlineKeyboard } from "../deps.ts";
 import { MyContext } from "../types/context.ts";
-import { setCommands } from "../utils/setcommands.ts";
+import { setCommands } from "../utils/setCommands.ts";
 
 const locales = [
   {

@@ -1,13 +1,11 @@
 import { Bot } from "../deps.ts";
 import { I18n } from "../deps.ts";
 
-// import { autoThread } from "https://raw.githubusercontent.com/grammyjs/auto-thread/main/src/auto-thread.ts";
 import "https://deno.land/std@0.201.0/dotenv/load.ts";
 
 import { isBotAdmin } from "../utils/detect.ts";
 import { MyContext } from "../types/context.ts";
 import { getLocale } from "../db/locale.ts";
-import { setCommands } from "../utils/setcommands.ts";
 
 export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") as string);
 await bot.init();
@@ -33,8 +31,6 @@ bot.use(async (ctx, next) => {
   const locale = await getLocale(chatId);
   await ctx.i18n.useLocale(locale);
 
-  await setCommands(ctx, locale);
-
   await next();
 });
 
@@ -49,5 +45,4 @@ bot.use(async (ctx, next) => {
   await next();
 });
 
-// bot.use(autoThread() as unknown as Middleware<MyContext>);
 bot.use(isBotAdmin);
