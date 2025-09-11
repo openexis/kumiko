@@ -39,7 +39,9 @@ function isReplyingSelf(ctx: MyContext): boolean {
 }
 
 async function isBotAdmin(ctx: MyContext, next: NextFunction): Promise<void> {
-  if (ctx.msg!.chat.type == "private" || !ctx.update.message) {
+  if (
+    ctx.msg == undefined || ctx.msg.chat == undefined || ctx.me == undefined
+  ) {
     await next();
     return;
   }
