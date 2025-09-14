@@ -46,6 +46,11 @@ async function isBotAdmin(ctx: MyContext, next: NextFunction): Promise<void> {
     return;
   }
 
+  if (ctx.msg.chat.type == "private") {
+    await next();
+    return;
+  }
+
   const member = await ctx.api.getChatMember(
     ctx.chatId!,
     ctx.me.id,
