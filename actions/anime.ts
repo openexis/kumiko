@@ -1,4 +1,4 @@
-import { bot } from "../config/index.ts";
+import { bot } from "../config/bot.ts";
 import { MyContext } from "../types/context.ts";
 import { search_anime, SHIKIMORI } from "../api/mod.ts";
 import { InlineQueryResultBuilder } from "../deps.ts";

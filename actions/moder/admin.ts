@@ -1,5 +1,5 @@
 import { ChatMemberAdministrator } from "https://deno.land/x/grammy_types@v3.2.0/manage.ts";
-import { bot } from "../../config/index.ts";
+import { bot } from "../../config/bot.ts";
 import { isAdmin, isReplyingToMe } from "../../utils/detect.ts";
 
 bot

@@ -1,4 +1,4 @@
-import { kv } from "../config/index.ts";
+import { kv } from "../config/kv.ts";
 
 export async function getLocale(chat_id: string | number): Promise<string> {
   const data = await kv.get<string>(["locale", chat_id.toString()]);

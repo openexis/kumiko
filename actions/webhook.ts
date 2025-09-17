@@ -1,4 +1,5 @@
-import { bot, kv } from "../config/index.ts";
+import { bot } from "../config/bot.ts";
+import { kv } from "../config/kv.ts";
 import { decideResponse } from "../utils/decideWebhook.ts";
 
 export async function handleGithubWebhook(req: Request): Promise<void> {

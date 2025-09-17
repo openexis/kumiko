@@ -1,4 +1,5 @@
-import { bot, kv } from "../config/index.ts";
+import { bot } from "../config/bot.ts";
+import { kv } from "../config/kv.ts";
 import { InlineKeyboard } from "../deps.ts";
 import { MyContext } from "../types/context.ts";
 import { setCommands } from "../utils/setCommands.ts";

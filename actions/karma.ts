@@ -1,4 +1,4 @@
-import { bot } from "../config/index.ts";
+import { bot } from "../config/bot.ts";
 import {
   getKarma,
   incrementUserChangeCount,
@@ -6,7 +6,7 @@ import {
   updateKarma,
 } from "../db/karma.ts";
 
-import { kv } from "../config/index.ts";
+import { kv } from "../config/kv.ts";
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(

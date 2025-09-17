@@ -1,4 +1,4 @@
-import { kv } from "../config/index.ts";
+import { kv } from "../config/kv.ts";
 
 async function updateKarma(
   chat_id: string | number,

@@ -1,5 +1,5 @@
 import { Response } from "../types/response.ts";
-import { kv } from "../config/index.ts";
+import { kv } from "../config/kv.ts";
 
 async function clearWarns(user_id: string | number): Promise<Response> {
   await kv.delete(["warns", user_id.toString()]);
