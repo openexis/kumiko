@@ -1,5 +1,5 @@
 import { handleGithubWebhook } from "./actions/webhook.ts";
-import { bot, instance } from "./config/index.ts";
+import { bot, instance } from "./config/bot.ts";
 import { serve, webhookCallback } from "./deps.ts";
 import "https://deno.land/std@0.201.0/dotenv/load.ts";
 
