@@ -92,6 +92,9 @@ should-i-warn-myself = Hmm... O'zimga ogohlantirish berishim kerakm?
 
 i-cant-warn-admins = Adminlarga ogohlantirish bera olmayman.
 
+should-i-unwarn-myself = Hmm... O'zimdan ogohlantirishni olib tashlashim kerakmi?
+
+i-cant-unwarn-admins = Adminlardan ogohlantirishni olib tashlay olmayman, chunki ularni hatto ogohlantirib bo'lmaydi, bu aniq, to'g'rimi?  
 
 github-org-not-set = Siz .env faylida hech qanday GitHub tashkilotini ko‘rsatmagansiz.
 

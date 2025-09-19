@@ -1,18 +1,42 @@
 import { bot } from "../../config/bot.ts";
-import { Response } from "../../types/response.ts";
 import { unWarnUser } from "../../db/warns.ts";
 import {
   isAdmin,
-  isReplying,
   isReplyingToAdmin,
   isReplyingToMe,
 } from "../../utils/detect.ts";
 import { MyContext } from "../../types/context.ts";
 
 // Function to handle the unwarning logic
-async function handleUnwarn(ctx: MyContext): Promise<void> {
-  const userId = ctx.message?.reply_to_message?.from?.id as number;
-  const response: Response = await unWarnUser(userId);
+// deno-lint-ignore no-explicit-any
+async function handleUnwarn(ctx: MyContext): Promise<any> {
+  const reply_to_message = ctx.message?.reply_to_message;
+
+  if (reply_to_message == undefined) {
+    await ctx.reply(ctx.t("reply-to-message"));
+    return;
+  }
+
+  const replied_user = reply_to_message.from;
+
+  if (replied_user == undefined) {
+    return;
+  }
+
+  if (isReplyingToMe(ctx)) {
+    return await ctx.reply(ctx.t("should-i-unwarn-myself"));
+  }
+
+  if (await isReplyingToAdmin(ctx)) {
+    return await ctx.reply(ctx.t("i-cant-unwarn-admins"));
+  }
+
+  if (replied_user == undefined) {
+    return;
+  }
+
+  const userId = replied_user.id as number;
+  const response = await unWarnUser(userId);
 
   if (response.status === 200) {
     const text = ctx.t("unwarn-success", {
@@ -25,9 +49,6 @@ async function handleUnwarn(ctx: MyContext): Promise<void> {
 
 bot
   .filter(async (ctx: MyContext) => await isAdmin(ctx))
-  .filter(async (ctx: MyContext) => await isReplying(ctx))
-  .filter(async (ctx: MyContext) => !(await isReplyingToMe(ctx)))
-  .filter(async (ctx: MyContext) => !await isReplyingToAdmin(ctx))
   .command("unwarn", async (ctx: MyContext) => {
     try {
       await handleUnwarn(ctx);

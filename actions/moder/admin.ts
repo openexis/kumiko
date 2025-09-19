@@ -8,7 +8,6 @@ bot
   .filter(
     async (ctx) => await isAdmin(ctx),
     async (ctx) => {
-      // if (!isReplying(ctx)) return await ctx.reply(ctx.t("reply-to-message"));
       const user = ctx.message?.reply_to_message?.from;
       if (user == undefined) {
         return await ctx.reply(ctx.t("reply-to-message"));

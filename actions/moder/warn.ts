@@ -1,15 +1,14 @@
 import { bot } from "../../config/bot.ts";
-import { Response } from "../../types/response.ts";
 import { clearWarns, warnUser } from "../../db/warns.ts";
 import {
   isAdmin,
-  isReplying,
   isReplyingToAdmin,
   isReplyingToMe,
 } from "../../utils/detect.ts";
 import { MyContext } from "../../types/context.ts";
 
 // Function to handle the warning logic
+// deno-lint-ignore no-explicit-any
 async function handleWarning(ctx: MyContext): Promise<any> {
   const reply_to_message = ctx.message?.reply_to_message;
 
@@ -36,7 +35,7 @@ async function handleWarning(ctx: MyContext): Promise<any> {
     return;
   }
   const userId = replied_user.id;
-  const response: Response = await warnUser(userId);
+  const response = await warnUser(userId);
 
   const warnsCount = parseInt(response.message.match(/\d+/g)?.[0] || "0"); // Extract warns count safely
 

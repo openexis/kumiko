@@ -93,6 +93,10 @@ should-i-warn-myself = Hmm... Should I warn myself?
 
 i-cant-warn-admins = I can't warn admins, pretty obvious right?
 
+should-i-unwarn-myself = Hmm... Should I unwarn myself?
+
+i-cant-unwarn-admins = I can't unwarn admins, because they can not be even warned, pretty obvious right?
+
 github-org-not-set = No GitHub organization was configured in the .env file.
 
 only-admins-can-use = This command can only be used by admins.
