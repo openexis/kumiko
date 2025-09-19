@@ -51,10 +51,6 @@ async function handleWarning(ctx: MyContext): Promise<void> {
 }
 
 bot
-  .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
-  .filter(async (ctx) => await isReplying(ctx)) // Check if replying to a message
-  .filter((ctx) => !isReplyingToMe(ctx)) // Check if not replying to self
-  .filter(async (ctx) => !await isReplyingToAdmin(ctx)) // Check if not replying to admin
   .command("warn", async (ctx) => {
     try {
       await handleWarning(ctx);
@@ -62,4 +58,8 @@ bot
       console.error("Error handling warning:", error);
       await ctx.reply(ctx.t("warn-error"));
     }
-  });
+  })
+  .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
+  .filter(async (ctx) => await isReplying(ctx)) // Check if replying to a message
+  .filter((ctx) => !isReplyingToMe(ctx)) // Check if not replying to self
+  .filter(async (ctx) => !await isReplyingToAdmin(ctx)); // Check if not replying to admin

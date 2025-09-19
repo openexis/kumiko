@@ -7,7 +7,9 @@ import { isBotAdmin } from "../utils/detect.ts";
 import { MyContext } from "../types/context.ts";
 import { getLocale } from "../db/locale.ts";
 
-export const bot = new Bot<MyContext>(Deno.env.get("BOT_TOKEN") as string);
+import { BOT_TOKEN, STATISTICS_URL } from "./env.ts";
+
+export const bot = new Bot<MyContext>(BOT_TOKEN);
 await bot.init();
 
 // @ts-ignore deno-lint-ignore
@@ -32,6 +34,56 @@ bot.use(async (ctx, next) => {
   await ctx.i18n.useLocale(locale);
 
   await next();
+});
+
+// Statistics
+bot.chatType(["group", "supergroup"]).use(async (ctx, next) => {
+  if (!ctx.message?.text) {
+    return await next();
+  }
+
+  const user_count = await ctx.api.getChatMemberCount(ctx.chatId);
+
+  const request_body = {
+    chat_id: ctx.chatId,
+    title: ctx.chat?.title,
+    username: ctx.chat?.username,
+    from_field: {
+      id: ctx.from?.id,
+      is_bot: ctx.from?.is_bot,
+      first_name: ctx.from?.first_name,
+      last_name: ctx.from?.last_name,
+      username: ctx.from?.username,
+      language_code: ctx.from?.language_code,
+    },
+    user_count,
+    message_id: ctx.message.message_id,
+    date: ctx.message.date,
+    text: ctx.message.text,
+  };
+
+  console.log("Sending statistics:", request_body);
+
+  try {
+    const request = await fetch(
+      `${STATISTICS_URL}/stats/update/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request_body),
+      },
+    );
+    if (request.ok) {
+      console.log("Status:", request.status);
+      console.log("Body:", await request.text());
+    }
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+
+  return await next();
 });
 
 // Debugger

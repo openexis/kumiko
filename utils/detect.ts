@@ -69,7 +69,15 @@ async function isBotAdmin(ctx: MyContext, next: NextFunction): Promise<void> {
 }
 
 function isReplying(ctx: MyContext): boolean {
-  if (ctx.msg!.reply_to_message!.forum_topic_created) {
+  if (ctx.message == undefined) {
+    return false;
+  }
+
+  if (ctx.message.reply_to_message == undefined) {
+    return false;
+  }
+
+  if (ctx.message.reply_to_message.forum_topic_created) {
     return false;
   }
 
