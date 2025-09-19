@@ -89,6 +89,10 @@ warn-success =
 
 warn-error = Something went wrong while issuing the warning.
 
+should-i-warn-myself = Hmm... Should I warn myself?
+
+i-cant-warn-admins = I can't warn admins, pretty obvious right?
+
 github-org-not-set = No GitHub organization was configured in the .env file.
 
 only-admins-can-use = This command can only be used by admins.

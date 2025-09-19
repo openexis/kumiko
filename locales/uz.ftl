@@ -88,6 +88,11 @@ warn-success =
 
 warn-error = Ogohlantirishni berishda xatolik yuz berdi.
 
+should-i-warn-myself = Hmm... O'zimga ogohlantirish berishim kerakm?
+
+i-cant-warn-admins = Adminlarga ogohlantirish bera olmayman.
+
+
 github-org-not-set = Siz .env faylida hech qanday GitHub tashkilotini ko‘rsatmagansiz.
 
 only-admins-can-use = Bu buyruqdan faqat adminlar foydalanishi mumkin!

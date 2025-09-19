@@ -10,7 +10,7 @@ import {
 import { MyContext } from "../../types/context.ts";
 
 // Function to handle the warning logic
-async function handleWarning(ctx: MyContext): Promise<void> {
+async function handleWarning(ctx: MyContext): Promise<any> {
   const reply_to_message = ctx.message?.reply_to_message;
 
   if (reply_to_message == undefined) {
@@ -19,6 +19,18 @@ async function handleWarning(ctx: MyContext): Promise<void> {
   }
 
   const replied_user = reply_to_message.from;
+
+  if (replied_user == undefined) {
+    return;
+  }
+
+  if (isReplyingToMe(ctx)) {
+    return await ctx.reply(ctx.t("should-i-warn-myself"));
+  }
+
+  if (await isReplyingToAdmin(ctx)) {
+    return await ctx.reply(ctx.t("i-cant-warn-admins"));
+  }
 
   if (replied_user == undefined) {
     return;
@@ -51,6 +63,7 @@ async function handleWarning(ctx: MyContext): Promise<void> {
 }
 
 bot
+  .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
   .command("warn", async (ctx) => {
     try {
       await handleWarning(ctx);
@@ -58,8 +71,4 @@ bot
       console.error("Error handling warning:", error);
       await ctx.reply(ctx.t("warn-error"));
     }
-  })
-  .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
-  .filter(async (ctx) => await isReplying(ctx)) // Check if replying to a message
-  .filter((ctx) => !isReplyingToMe(ctx)) // Check if not replying to self
-  .filter(async (ctx) => !await isReplyingToAdmin(ctx)); // Check if not replying to admin
+  });
