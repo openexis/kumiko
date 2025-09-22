@@ -32,7 +32,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
       return await ctx.reply(ctx.t("cant-change-user-karma"));
     }
 
-    const karma_amount = ctx.msg!.text!.startsWith("+") ? 1 : -1;
+    const karma_amount = ctx.msg!.text!.startsWith("+") || karma_words.includes(ctx.msg!.text!.toLowerCase()) ? 1 : -1;
     const reply_user_name = reply_user.first_name;
 
     await incrementUserChangeCount(user_id);
