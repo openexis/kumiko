@@ -8,15 +8,16 @@ import {
 
 import { kv } from "../config/kv.ts";
 
-const karma_words = ["thanks", "tnx", "raxmat", "rahmat", "рахмат", "спасибо"]
+const karma_words = ["thanks", "tnx", "raxmat", "rahmat", "рахмат", "спасибо"];
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx) =>
-    /^(\+|-)\1*$/.test(ctx.msg!.text!) || karma_words.includes(ctx.msg!.text!.toLowerCase()),
+    /^(\+|-)\1*$/.test(ctx.msg!.text!) ||
+    Boolean(
+      karma_words.filter((word) => ctx.message.text.split(" ").includes(word)),
+    ),
   async (ctx) => {
-    console.log("HEY");
-
     if (!ctx.message?.reply_to_message) return;
 
     const chat_id = ctx.chatId!;
@@ -32,7 +33,10 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
       return await ctx.reply(ctx.t("cant-change-user-karma"));
     }
 
-    const karma_amount = ctx.msg!.text!.startsWith("+") || karma_words.includes(ctx.msg!.text!.toLowerCase()) ? 1 : -1;
+    const karma_amount = ctx.msg!.text!.startsWith("+") ||
+        karma_words.filter((word) => ctx.msg!.text.split(" ").includes(word))
+      ? 1
+      : -1;
     const reply_user_name = reply_user.first_name;
 
     await incrementUserChangeCount(user_id);
