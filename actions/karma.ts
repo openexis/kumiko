@@ -8,10 +8,12 @@ import {
 
 import { kv } from "../config/kv.ts";
 
+const karma_words = ["thanks", "tnx", "raxmat", "rahmat", "рахмат", "спасибо"]
+
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx) =>
-    /^(\+|-)\1*$/.test(ctx.msg!.text!) || ["thanks"].includes(ctx.msg!.text!),
+    /^(\+|-)\1*$/.test(ctx.msg!.text!) || karma_words.includes(ctx.msg!.text!.toLowerCase()),
   async (ctx) => {
     console.log("HEY");
 
