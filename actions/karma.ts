@@ -14,10 +14,20 @@ const karma_words = ["thanks", "tnx", "raxmat", "rahmat", "рахмат", "сп�
 bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx) =>
     /^(\+|-)\1*$/.test(ctx.msg!.text!) ||
-    Boolean(
-      karma_words.filter((word) => ctx.message.text.split(" ").includes(word)),
-    ),
+    karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
+        .length > 0,
   async (ctx) => {
+    console.log(
+      "Condition: ",
+      karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
+        .length > 0,
+    );
+
+    console.log(
+      "TF: ",
+      karma_words.filter((word) => ctx.message.text.split(" ").includes(word)),
+    );
+
     if (!ctx.message?.reply_to_message) return;
 
     const chat_id = ctx.chatId!;
@@ -35,6 +45,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
 
     const karma_amount = ctx.msg!.text!.startsWith("+") ||
         karma_words.filter((word) => ctx.msg!.text.split(" ").includes(word))
+            .length > 0
       ? 1
       : -1;
     const reply_user_name = reply_user.first_name;
