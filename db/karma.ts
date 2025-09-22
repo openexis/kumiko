@@ -40,24 +40,61 @@ function getToday(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-async function getUserChangeCount(user_id: number): Promise<number> {
-  const key = ["karma_limit", user_id.toString(), getToday()];
+async function deleteUserChangeCount(
+  chat_id: number,
+  user_id: number,
+): Promise<void> {
+  const key = [
+    "karma_limit",
+    chat_id.toString(),
+    user_id.toString(),
+    getToday(),
+  ];
+
+  await kv.delete(key);
+}
+
+async function getUserChangeCount(
+  chat_id: number,
+  user_id: number,
+): Promise<number> {
+  const key = [
+    "karma_limit",
+    chat_id.toString(),
+    user_id.toString(),
+    getToday(),
+  ];
+
   const res = await kv.get<number>(key);
   return res.value ?? 0;
 }
 
-async function incrementUserChangeCount(user_id: number): Promise<void> {
-  const key = ["karma_limit", user_id.toString(), getToday()];
-  const current = await getUserChangeCount(user_id);
+async function incrementUserChangeCount(
+  chat_id: number,
+  user_id: number,
+): Promise<void> {
+  const key = [
+    "karma_limit",
+    chat_id.toString(),
+    user_id.toString(),
+    getToday(),
+  ];
+
+  const current = await getUserChangeCount(chat_id, user_id);
   await kv.set(key, current + 1);
 }
 
-async function isUserAtLimit(user_id: number, maxPerDay = 5): Promise<boolean> {
-  const current = await getUserChangeCount(user_id);
+async function isUserAtLimit(
+  chat_id: number,
+  user_id: number,
+  maxPerDay = 5,
+): Promise<boolean> {
+  const current = await getUserChangeCount(chat_id, user_id);
   return current >= maxPerDay;
 }
 
 export {
+  deleteUserChangeCount,
   getKarma,
   getUserChangeCount,
   incrementUserChangeCount,

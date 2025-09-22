@@ -17,17 +17,6 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
     karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
         .length > 0,
   async (ctx) => {
-    console.log(
-      "Condition: ",
-      karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
-        .length > 0,
-    );
-
-    console.log(
-      "TF: ",
-      karma_words.filter((word) => ctx.message.text.split(" ").includes(word)),
-    );
-
     if (!ctx.message?.reply_to_message) return;
 
     const chat_id = ctx.chatId!;
@@ -39,7 +28,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
       return await ctx.reply(ctx.t("cant-change-own-reputation"));
     }
 
-    if (await isUserAtLimit(user_id)) {
+    if (await isUserAtLimit(chat_id, user_id)) {
       return await ctx.reply(ctx.t("cant-change-user-karma"));
     }
 
@@ -50,7 +39,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
       : -1;
     const reply_user_name = reply_user.first_name;
 
-    await incrementUserChangeCount(user_id);
+    await incrementUserChangeCount(chat_id, user_id);
     await updateKarma(chat_id, reply_user_id, karma_amount);
 
     const fromUserKarma = await getKarma(chat_id, user_id);
