@@ -8,7 +8,30 @@ import {
 
 import { kv } from "../config/kv.ts";
 
-const karma_words = ["thanks", "tnx", "raxmat", "rahmat", "рахмат", "спасибо"];
+const karma_words = [
+  "thanks",
+  "tnx",
+  "raxmat",
+  "rahmat",
+  "рахмат",
+  "спасибо",
+  "спасиба",
+  "спасибки",
+  "спс",
+  "пасиб",
+  "пасиба",
+  "сяп",
+  "пасибки",
+  "спасибочки",
+  "благодарю",
+  "респект",
+  // "от души",
+  // "thank you",
+  "ty",
+  "respect",
+  "tashakkur",
+  "minnatdorman",
+];
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
