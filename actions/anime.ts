@@ -16,10 +16,12 @@ bot.command("anime", async (ctx: MyContext) => {
     return await ctx.reply("Anime name can not be empty.");
   }
 
+  if (ctx.chatId == undefined) return;
+
   const anime = await search_anime(anime_name);
 
   await ctx.api.sendPhoto(
-    ctx.update.message?.chat.id as number,
+    ctx.chatId,
     `${SHIKIMORI}${anime.image}`,
     {
       caption: ctx.t("anime_info", {

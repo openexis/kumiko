@@ -119,7 +119,7 @@ anime_info =
     {$name} / {$russian}  
     Epizodlar: {$episodes}  
     Reyting: {$rating}  
-    Tavsif: {$description}...  
+    Tavsif: {$description}…
     <a href="{$shikimori}{$url}">Shikimori’da o‘qishni davom eting</a>
 
 start-description = Botni ishga tushirish.

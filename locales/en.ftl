@@ -119,7 +119,7 @@ anime_info =
     {$name} / {$russian}
     Episodes: {$episodes}
     Rating: {$rating}
-    Description: {$description}...
+    Description: {$description}…
     <a href="{$shikimori}{$url}">Continue reading on Shikimori</a>
 
 start-description = Start the bot.

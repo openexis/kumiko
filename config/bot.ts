@@ -15,6 +15,9 @@ await bot.init();
 // @ts-ignore deno-lint-ignore
 const i18n = new I18n<MyContext>({
   defaultLocale: "en",
+  fluentBundleOptions: {
+    useIsolating: false,
+  },
 });
 
 await i18n.loadLocalesDir("locales");
