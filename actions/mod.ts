@@ -16,6 +16,6 @@ export * from "./moder/unban.ts";
 export * from "./moder/warn.ts";
 export * from "./moder/unwarn.ts";
 
+export * from "./currency.ts";
 export * from "./grok.ts";
 export * from "./karma.ts";
-export * from "./currency.ts";
