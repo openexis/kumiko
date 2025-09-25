@@ -6,7 +6,7 @@ bot.on(":text", async (ctx) => {
 
   if (!ctx.message.text.startsWith("@grok")) return;
 
-  if (ctx.message.from.id != 5560860031) return;
+  if (![5560860031, 7364646175].includes(ctx.message.from.id)) return;
 
   const prompt = ctx.message.text.split("@grok")[1].trim();
   console.log("Prompt: ", prompt);
