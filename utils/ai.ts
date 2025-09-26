@@ -38,8 +38,11 @@ async function ask_grok(
   });
 
   const body = await request.json();
-  console.log(body.candidates);
   console.log(body);
+
+  if (body.error) {
+    return `${body.error.code}: ${body.error.message}`;
+  }
 
   return body.candidates[0].content.parts[0].text;
 }
