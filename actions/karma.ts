@@ -39,8 +39,8 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
     /^(\+|-)\1*$/.test(ctx.msg!.text!) ||
     karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
         .length > 0,
-  async (ctx) => {
-    if (!ctx.message?.reply_to_message) return;
+  async (ctx, next) => {
+    if (!ctx.message?.reply_to_message) return await next();
 
     const chat_id = ctx.chatId!;
     const user_id = ctx.from!.id!;

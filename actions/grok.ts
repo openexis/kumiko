@@ -1,12 +1,14 @@
 import { bot } from "../config/bot.ts";
 import { ask_grok } from "../utils/ai.ts";
 
-bot.on(":text", async (ctx) => {
-  if (ctx.message == undefined) return;
+bot.on(":text", async (ctx, next) => {
+  if (ctx.message == undefined) return await next();
 
-  if (!ctx.message.text.startsWith("@grok")) return;
+  if (!ctx.message.text.startsWith("@grok")) return await next();
 
-  if (![5560860031, 7364646175].includes(ctx.message.from.id)) return;
+  if (![5560860031, 7364646175].includes(ctx.message.from.id)) {
+    return await next();
+  }
 
   const prompt = ctx.message.text.split("@grok")[1].trim();
   console.log("Prompt: ", prompt);
