@@ -41,8 +41,8 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
         ctx.message.text.toLowerCase().split(" ").includes(word)
       )
         .length > 0,
-  async (ctx) => {
-    if (!ctx.message?.reply_to_message) return;
+  async (ctx, next) => {
+    if (!ctx.message?.reply_to_message) return await next();
 
     const chat_id = ctx.chatId!;
     const user_id = ctx.from!.id!;

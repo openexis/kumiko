@@ -1,14 +1,16 @@
 import { bot } from "../config/bot.ts";
 import { rates } from "../utils/converter.ts";
 
-bot.on("message:text", async (ctx) => {
+bot.on(":text", async (ctx, next) => {
+  if (ctx.message == undefined) return next();
+
   const text = ctx.message.text.trim().toLowerCase();
 
   const match = text.match(
     /\b(\d+(?:\.\d+)?)\s([a-z]{3})\b|\b([a-z]{3})\s(\d+(?:\.\d+)?)\b/,
   );
   if (!match) {
-    return;
+    return await next();
   }
 
   const amount = parseFloat(match[1] || match[4]);
@@ -23,7 +25,7 @@ bot.on("message:text", async (ctx) => {
     );
 
     if (currenciesToConvertTo.length === 0) {
-      return;
+      return await next();
     }
 
     let responseMessage = `**${amount} ${sourceCurrency} is:**\n\n`;
@@ -46,6 +48,6 @@ bot.on("message:text", async (ctx) => {
       `Could not find rates for '${sourceCurrency}'. Message ignored. Error: ${error}`,
     );
 
-    return;
+    return await next();
   }
 });
