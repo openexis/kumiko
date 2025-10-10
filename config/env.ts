@@ -9,6 +9,5 @@ function getEnv(key: string): string {
 }
 
 const BOT_TOKEN = getEnv("BOT_TOKEN");
-const STATISTICS_URL = getEnv("STATISTICS_URL");
 
-export { BOT_TOKEN, STATISTICS_URL };
+export { BOT_TOKEN };

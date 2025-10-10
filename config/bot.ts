@@ -5,7 +5,7 @@ import { isBotAdmin } from "../utils/detect.ts";
 import { MyContext } from "../types/context.ts";
 import { getLocale } from "../db/locale.ts";
 
-import { BOT_TOKEN, STATISTICS_URL } from "./env.ts";
+import { BOT_TOKEN } from "./env.ts";
 
 export const bot = new Bot<MyContext>(BOT_TOKEN);
 await bot.init();
@@ -66,6 +66,12 @@ bot.chatType(["group", "supergroup"]).use(async (ctx, next) => {
   console.log("Sending statistics:", request_body);
 
   try {
+    const STATISTICS_URL = Deno.env.get("STATISTICS_URL");
+
+    if (STATISTICS_URL == undefined) {
+      return await next();
+    }
+
     const request = await fetch(
       `${STATISTICS_URL}/stats/update/`,
       {
