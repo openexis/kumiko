@@ -3,9 +3,10 @@ import { MyContext } from "../types/context.ts";
 import { isAdmin, isOwner } from "../utils/detect.ts";
 import { kv } from "../config/kv.ts";
 
-bot.filter((ctx: MyContext) =>
-  ["group", "supergroup"].includes(ctx.chat?.type ?? "")
-)
+bot.chatType([
+  "group",
+  "supergroup",
+])
   .command("set", async (ctx: MyContext) => {
     if (!Deno.env.get("GITHUB_ORG")) {
       return await ctx.reply(
