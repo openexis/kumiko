@@ -1,8 +1,6 @@
 import { Bot } from "../deps.ts";
 import { I18n } from "../deps.ts";
 
-import "https://deno.land/std@0.201.0/dotenv/load.ts";
-
 import { isBotAdmin } from "../utils/detect.ts";
 import { MyContext } from "../types/context.ts";
 import { getLocale } from "../db/locale.ts";
