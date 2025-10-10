@@ -17,7 +17,8 @@ async function ask_grok(
   const system_instruction = {
     parts: [
       {
-        "text": "Your response should be Telegram-compatible HTML format",
+        "text":
+          "Your response should be plain-text, not HTML nor Markdown, DO NOT USE ANY FORMATTINGS, PLAIN TEXT ONLY.",
       },
       {
         "text":
@@ -69,6 +70,7 @@ async function ask_grok(
     .parts[0]
     .text
     .replaceAll("```html")
+    .replaceAll("<br>", "")
     .replaceAll("```");
 }
 

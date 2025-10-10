@@ -12,10 +12,11 @@ bot.on(":text", async (ctx, next) => {
 
   const prompt = ctx.message.text.split("@grok")[1].trim();
   console.log("Prompt: ", prompt);
+
   const result = await ask_grok(
     prompt,
     await ctx.i18n.getLocale(),
-    ctx.message.reply_to_message?.text,
+    ctx.message.reply_to_message?.text || ctx.message.reply_to_message?.caption,
   );
 
   await ctx.reply(result, { parse_mode: "HTML" });
