@@ -37,6 +37,7 @@ bot
         new InputFile(new URL(response.url)),
         {
           caption: response.message,
+          message_thread_id: ctx.message.message_thread_id,
         },
       );
     }
@@ -46,6 +47,7 @@ bot
       response.url,
       {
         caption: response.message,
+        message_thread_id: ctx.message.message_thread_id,
       },
     );
   });
