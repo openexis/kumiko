@@ -1,6 +1,8 @@
 import { download } from "../api/cobalt.ts";
 import { bot } from "../config/bot.ts";
 
+import { InputFile } from "../deps.ts";
+
 bot
   .chatType(["group", "supergroup"])
   .on(":text", async (ctx, next) => {
@@ -29,7 +31,17 @@ bot
       return await ctx.reply(response.message);
     }
 
-    await ctx.api.sendVideo(
+    if (response.filetype == "photo") {
+      return await ctx.api.sendPhoto(
+        ctx.chatId,
+        new InputFile(new URL(response.url)),
+        {
+          caption: response.message,
+        },
+      );
+    }
+
+    return await ctx.api.sendVideo(
       ctx.chatId,
       response.url,
       {

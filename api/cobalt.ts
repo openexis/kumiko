@@ -4,6 +4,7 @@ interface CobaltResponse {
   ok: true | false;
   url: string;
   message: string;
+  filetype: "video" | "photo" | "idk";
 }
 
 async function download(url: string): Promise<CobaltResponse> {
@@ -15,6 +16,7 @@ async function download(url: string): Promise<CobaltResponse> {
       ok: false,
       url: "",
       message: "Cobalt API URL is not defined.",
+      filetype: "idk",
     };
   }
 
@@ -37,15 +39,30 @@ async function download(url: string): Promise<CobaltResponse> {
         ok: false,
         url: "",
         message: `Cobalt API error (${response.status}): ${text}`,
+        filetype: "idk",
       };
     }
 
     const body = await response.json();
 
+    const filename = body.filename;
+
+    const fileExtension = filename.split(".").pop();
+
+    if (["jpg", "png", "jpeg"].includes(fileExtension)) {
+      return {
+        ok: true,
+        url: body.url,
+        message: "Photo is downloaded successfully",
+        filetype: "photo",
+      };
+    }
+
     return {
       ok: true,
       url: body.url,
-      message: "Video is fetched successfully",
+      message: "Video is downloaded successfully",
+      filetype: "video",
     };
   } catch (e) {
     const error = e instanceof Error ? e.message : String(e);
@@ -53,6 +70,7 @@ async function download(url: string): Promise<CobaltResponse> {
       ok: false,
       url: "",
       message: `Network or parsing error: ${error}`,
+      filetype: "idk",
     };
   }
 }
