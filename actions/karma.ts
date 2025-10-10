@@ -70,6 +70,8 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
 
     const action = karma_amount === 1 ? ctx.t("increased") : ctx.t("decreased");
 
+    // NOTE: ctx.t() function is producing IDs as 100,000,000 not as 1000000000, breaking Telegram's deeplink scheme.
+    // so .replaceAll() method is used to reform the ID.
     await ctx.reply(
       ctx.t("reputation-changed", {
         user_id: user_id,
@@ -79,7 +81,10 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
         reply_user_id: reply_user_id,
         reply_user_name: reply_user_name,
         to_user_karma: toUserKarma!,
-      }),
+      }).replaceAll(
+        ",",
+        "",
+      ),
       {
         parse_mode: "HTML",
       },
