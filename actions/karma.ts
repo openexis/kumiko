@@ -37,7 +37,9 @@ const karma_words = [
 bot.chatType(["group", "supergroup"]).on(":text").filter(
   (ctx) =>
     /^(\+|-)\1*$/.test(ctx.msg!.text!) ||
-    karma_words.filter((word) => ctx.message.text.split(" ").includes(word))
+    karma_words.filter((word) =>
+        ctx.message.text.toLowerCase().split(" ").includes(word)
+      )
         .length > 0,
   async (ctx, next) => {
     if (!ctx.message?.reply_to_message) return await next();
@@ -56,7 +58,9 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
     }
 
     const karma_amount = ctx.msg!.text!.startsWith("+") ||
-        karma_words.filter((word) => ctx.msg!.text.split(" ").includes(word))
+        karma_words.filter((word) =>
+            ctx.msg!.text.toLowerCase().split(" ").includes(word)
+          )
             .length > 0
       ? 1
       : -1;
