@@ -6,33 +6,50 @@ import { InputFile } from "../deps.ts";
 bot
   .chatType(["group", "supergroup"])
   .on(":text", async (ctx, next) => {
-    const isURL = URL.canParse(ctx.message.text);
+    const text = ctx.message.text;
 
-    if (!isURL) {
-      return await next();
-    }
+    if (!URL.canParse(text)) return await next();
 
-    const url = new URL(ctx.message.text);
+    const url = new URL(text);
 
-    const doesInclude = url.host.includes("instagram");
-    // NOTE: it has some issues with youtube, will be fixed later
+    const isYouTube =
+      (url.host.includes("youtube") || url.host.includes("youtu.be")) &&
+      url.pathname.includes("/shorts");
+
+    const isInstagram = url.host.includes("instagram");
+
+    // NOTE:
     // tiktok is blocked, will be fixed after a proxy is installed
 
-    // ||
-    //   url.host.includes("youtube") ||
-    //   url.host.includes("youtu.be") ||
-    //   url.host.includes("tiktok");
-
+    const doesInclude = isYouTube || isInstagram;
     if (!doesInclude) return await next();
 
-    const response = await download(url.href);
+    const response = isYouTube
+      ? await download(url.href, {
+        youtubeVideoCodec: "h264",
+        youtubeVideoContainer: "mp4",
+      })
+      : await download(url.href);
 
     if (!response.ok) {
       return await ctx.reply(response.message);
     }
 
-    if (response.filetype == "photo") {
-      return await ctx.api.sendPhoto(
+    try {
+      if (response.filetype === "photo") {
+        return await ctx.api.sendPhoto(
+          ctx.chatId,
+          new InputFile(new URL(response.url)),
+          {
+            caption: response.message,
+            message_thread_id: ctx.message.message_thread_id,
+          },
+        );
+      }
+
+      console.log(response.url);
+
+      return await ctx.api.sendVideo(
         ctx.chatId,
         new InputFile(new URL(response.url)),
         {
@@ -40,14 +57,12 @@ bot
           message_thread_id: ctx.message.message_thread_id,
         },
       );
+    } catch (error) {
+      return await ctx.reply(
+        `Error occured while sending media: ${error}`,
+        {
+          message_thread_id: ctx.message.message_thread_id,
+        },
+      );
     }
-
-    return await ctx.api.sendVideo(
-      ctx.chatId,
-      response.url,
-      {
-        caption: response.message,
-        message_thread_id: ctx.message.message_thread_id,
-      },
-    );
   });

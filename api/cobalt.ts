@@ -7,7 +7,15 @@ interface CobaltResponse {
   filetype: "video" | "photo" | "idk";
 }
 
-async function download(url: string): Promise<CobaltResponse> {
+export interface Speicfic {
+  youtubeVideoCodec?: "h264" | "av1" | "vp9";
+  youtubeVideoContainer?: "auto" | "mp4" | "webm" | "mkv";
+}
+
+async function download(
+  url: string,
+  specific?: Speicfic,
+): Promise<CobaltResponse> {
   const entry = await kv.get<string>(["COBALT_API_URL"]);
   const COBALT_API_URL = entry.value;
 
@@ -30,6 +38,7 @@ async function download(url: string): Promise<CobaltResponse> {
       body: JSON.stringify({
         url,
         downloadMode: "auto",
+        ...specific,
       }),
     });
 
