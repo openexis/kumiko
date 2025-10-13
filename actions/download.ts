@@ -17,7 +17,6 @@ bot
       url.pathname.includes("/shorts");
 
     const isInstagram = url.host.includes("instagram");
-
     // NOTE:
     // tiktok is blocked, will be fixed after a proxy is installed
 
@@ -32,7 +31,10 @@ bot
       : await download(url.href);
 
     if (!response.ok) {
-      return await ctx.reply(response.message);
+      console.log(response.message);
+      return await ctx.reply(
+        "Something's wrong with Cobalt API, try sending another link. ",
+      );
     }
 
     try {
