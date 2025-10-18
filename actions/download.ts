@@ -16,11 +16,10 @@ bot
       (url.host.includes("youtube") || url.host.includes("youtu.be")) &&
       url.pathname.includes("/shorts");
 
+    const isTikTok = url.host.includes("tiktok");
     const isInstagram = url.host.includes("instagram");
-    // NOTE:
-    // tiktok is blocked, will be fixed after a proxy is installed
 
-    const doesInclude = isYouTube || isInstagram;
+    const doesInclude = isYouTube || isInstagram || isTikTok;
     if (!doesInclude) return await next();
 
     const response = isYouTube
