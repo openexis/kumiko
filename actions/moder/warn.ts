@@ -62,12 +62,15 @@ async function handleWarning(ctx: MyContext): Promise<any> {
 }
 
 bot
-  .filter(async (ctx) => await isAdmin(ctx)) // Check if the user is an admin
-  .command("warn", async (ctx) => {
-    try {
-      await handleWarning(ctx);
-    } catch (error) {
-      console.error("Error handling warning:", error);
-      await ctx.reply(ctx.t("warn-error"));
-    }
-  });
+  .command("warn")
+  .filter(
+    async (ctx) => await isAdmin(ctx), // Check if the user is an admin
+    async (ctx) => {
+      try {
+        await handleWarning(ctx);
+      } catch (error) {
+        console.error("Error handling warning:", error);
+        await ctx.reply(ctx.t("warn-error"));
+      }
+    },
+  );
