@@ -48,12 +48,15 @@ async function handleUnwarn(ctx: MyContext): Promise<any> {
 }
 
 bot
-  .filter(async (ctx: MyContext) => await isAdmin(ctx))
-  .command("unwarn", async (ctx: MyContext) => {
-    try {
-      await handleUnwarn(ctx);
-    } catch (error) {
-      console.error("Error handling unwarn:", error);
-      await ctx.reply(ctx.t("unwarn-error"));
-    }
-  });
+  .command("unwarn")
+  .filter(
+    async (ctx: MyContext) => await isAdmin(ctx),
+    async (ctx: MyContext) => {
+      try {
+        await handleUnwarn(ctx);
+      } catch (error) {
+        console.error("Error handling unwarn:", error);
+        await ctx.reply(ctx.t("unwarn-error"));
+      }
+    },
+  );

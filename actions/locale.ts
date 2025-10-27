@@ -2,6 +2,7 @@ import { bot } from "../config/bot.ts";
 import { kv } from "../config/kv.ts";
 import { InlineKeyboard } from "../deps.ts";
 import { MyContext } from "../types/context.ts";
+import { isAdmin } from "../utils/detect.ts";
 import { setCommands } from "../utils/setCommands.ts";
 
 const locales = [
@@ -28,6 +29,10 @@ locales.map((locale: { code: string; name: string; emoji: string }) => {
 });
 
 bot.command("lang", async (ctx: MyContext) => {
+  if (!await isAdmin(ctx)) {
+    return await ctx.reply(ctx.t("only-admins-can-use"));
+  }
+
   await ctx.reply(ctx.t("choose-language"), {
     reply_markup: keyboard,
   });
