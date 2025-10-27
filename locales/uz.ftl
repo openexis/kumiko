@@ -11,6 +11,7 @@ help-commands =
     /help - Ushbu xabarni ko‘rsatish
     /lang - Bot tilini o‘zgartirish
     /top - Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatini oling
+    /currency - Qo‘llab-quvvatlanadigan valyutalar ro‘yxatini ko‘rish
 
     <b>Moderatorlar uchun:</b>
 

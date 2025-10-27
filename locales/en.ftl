@@ -11,6 +11,7 @@ help-commands =
     /help - Show this message
     /lang - Change the language of the bot
     /top - ListTop 10 users by karma
+    /currency - See the list of supported currencies
 
     <b>For moderators:</b>
 

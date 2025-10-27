@@ -1,5 +1,5 @@
 import { bot } from "../config/bot.ts";
-import { rates } from "../utils/converter.ts";
+import { base, rates } from "../utils/converter.ts";
 
 bot.on(":text", async (ctx, next) => {
   if (ctx.message == undefined) return next();
@@ -50,4 +50,44 @@ bot.on(":text", async (ctx, next) => {
 
     return await next();
   }
+});
+
+bot.command("currency", async (ctx) => {
+  const currencies = await base("USD");
+
+  const keys = Object.keys(currencies.rates);
+  const last_update = new Date(currencies.time_last_update_unix * 1000);
+  const next_update = new Date(currencies.time_next_update_unix * 1000);
+
+  const last_update_hours = last_update.getHours().toString().length < 2
+    ? `0${last_update.getHours()}`
+    : last_update.getHours();
+
+  const last_update_minutes = last_update.getMinutes().toString().length < 2
+    ? `0${last_update.getMinutes()}`
+    : last_update.getMinutes();
+
+  const next_update_hours = next_update.getHours().toString().length < 2
+    ? `0${next_update.getHours()}`
+    : next_update.getHours();
+
+  const next_update_minutes = next_update.getMinutes().toString().length < 2
+    ? `0${next_update.getMinutes()}`
+    : next_update.getMinutes();
+
+  const message =
+    `Last Update: ${last_update.getDate()}.${
+      last_update.getMonth() + 1
+    }.${last_update.getFullYear()} ${last_update_hours}:${last_update_minutes}` +
+    `\n` +
+    `Next Update: ${next_update.getDate()}.${
+      next_update.getMonth() + 1
+    }.${next_update.getFullYear()} ${next_update_hours}:${next_update_minutes}` +
+    `\n` +
+    `Available currencies: ` + `\n` +
+    `<blockquote expandable>\n-` + keys.join("\n-") + `</blockquote>`;
+
+  await ctx.reply(message, {
+    parse_mode: "HTML",
+  });
 });

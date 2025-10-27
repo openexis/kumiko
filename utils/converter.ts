@@ -34,3 +34,13 @@ export async function rates(
 
   return json.rates;
 }
+
+export async function base(
+  currencyCode: string,
+): Promise<ExchangeRates> {
+  const url = URL + currencyCode;
+  const response = await fetch(url);
+  const json: ExchangeRates = await response.json();
+
+  return json;
+}
