@@ -1,0 +1,77 @@
+[
+  {
+    "language": "en",
+    "commands": [
+      { "command": "/start", "description": "Start the bot" },
+      { "command": "/anime", "description": "Search for anime" },
+      { "command": "/source", "description": "Get the source code" },
+      { "command": "/help", "description": "Show this message" },
+      { "command": "/lang", "description": "Change the language of the bot" },
+      { "command": "/top", "description": "List top 10 users by karma" },
+      {
+        "command": "/currency",
+        "description": "See the list of supported currencies"
+      },
+      { "command": "/ban", "description": "Ban a user" },
+      { "command": "/unban", "description": "Unban a user" },
+      { "command": "/warn", "description": "Warn a user" },
+      { "command": "/unwarn", "description": "Remove warning from a user" },
+      { "command": "/mute", "description": "Mute a user" },
+      { "command": "/unmute", "description": "Unmute a user" }
+    ]
+  },
+  {
+    "language": "ru",
+    "commands": [
+      { "command": "/start", "description": "Запустить бота" },
+      { "command": "/anime", "description": "Поиск аниме" },
+      { "command": "/source", "description": "Получить исходный код" },
+      { "command": "/help", "description": "Показать это сообщение" },
+      { "command": "/lang", "description": "Изменить язык бота" },
+      {
+        "command": "/top",
+        "description": "Список топ-10 пользователей по карме"
+      },
+      {
+        "command": "/currency",
+        "description": "Посмотреть список поддерживаемых валют"
+      },
+      { "command": "/ban", "description": "Забанить пользователя" },
+      { "command": "/unban", "description": "Разбанить пользователя" },
+      { "command": "/warn", "description": "Предупредить пользователя" },
+      {
+        "command": "/unwarn",
+        "description": "Снять предупреждение у пользователя"
+      },
+      { "command": "/mute", "description": "Замутить пользователя" },
+      { "command": "/unmute", "description": "Размутить пользователя" }
+    ]
+  },
+  {
+    "language": "uz",
+    "commands": [
+      { "command": "/start", "description": "Botni ishga tushurish" },
+      { "command": "/anime", "description": "Anime qidirish" },
+      { "command": "/source", "description": "Manba kodini olish" },
+      { "command": "/help", "description": "Ushbu xabarni ko‘rsatish" },
+      { "command": "/lang", "description": "Bot tilini o‘zgartirish" },
+      {
+        "command": "/top",
+        "description": "Eng yuqori karmaga ega 10 foydalanuvchini ro‘yxatini oling"
+      },
+      {
+        "command": "/currency",
+        "description": "Qo‘llab-quvvatlanadigan valyutalar ro‘yxatini ko‘rish"
+      },
+      { "command": "/ban", "description": "Foydalanuvchini bloklash" },
+      {
+        "command": "/unban",
+        "description": "Foydalanuvchining blokini olib tashlash"
+      },
+      { "command": "/warn", "description": "Ogohlantirish berish" },
+      { "command": "/unwarn", "description": "Ogohlantirishni olib tashlash" },
+      { "command": "/mute", "description": "Foydalanuvchini ovozsizlantirish" },
+      { "command": "/unmute", "description": "Ovozini qayta yoqish" }
+    ]
+  }
+]

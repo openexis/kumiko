@@ -4,6 +4,7 @@ export type {
   BotCommandScope,
   BotCommandScopeChatMember,
   ChatPermissions,
+  LanguageCode,
 } from "https://deno.land/x/grammy/types.web.ts";
 
 export * from "https://deno.land/x/grammy_i18n/mod.ts";

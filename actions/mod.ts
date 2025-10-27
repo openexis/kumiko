@@ -5,6 +5,7 @@ export * from "./help.ts";
 export * from "./setwebhook.ts";
 export * from "./locale.ts";
 export * from "./set.ts";
+export * from "./commands.ts";
 
 // Moderation commands
 
