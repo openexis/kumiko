@@ -84,4 +84,43 @@ async function download(
   }
 }
 
-export { download };
+async function is_supported(platform: string): Promise<CobaltResponse> {
+  const entry = await kv.get<string>(["COBALT_API_URL"]);
+  const COBALT_API_URL = entry.value;
+
+  if (COBALT_API_URL == undefined) {
+    return {
+      ok: false,
+      url: "",
+      message: "Cobalt API URL is not defined.",
+      filetype: "idk",
+    };
+  }
+
+  const response = await fetch(COBALT_API_URL);
+  const { cobalt, cobalt: { services } } = await response.json() as {
+    cobalt: { services: string[] };
+  };
+
+  services.push("x");
+  console.log("Cobalt: ", cobalt);
+  console.log("Services:", services);
+
+  if (!services.includes(platform)) {
+    return {
+      ok: false,
+      url: "",
+      message: "This service is not supported.",
+      filetype: "idk",
+    };
+  }
+
+  return {
+    ok: true,
+    url: "",
+    message: "OK",
+    filetype: "idk",
+  };
+}
+
+export { download, is_supported };
