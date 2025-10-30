@@ -17,7 +17,11 @@
       { "command": "/warn", "description": "Warn a user" },
       { "command": "/unwarn", "description": "Remove warning from a user" },
       { "command": "/mute", "description": "Mute a user" },
-      { "command": "/unmute", "description": "Unmute a user" }
+      { "command": "/unmute", "description": "Unmute a user" },
+      {
+        "command": "/services",
+        "description": "See the list of supported services"
+      }
     ]
   },
   {
@@ -44,7 +48,11 @@
         "description": "Снять предупреждение у пользователя"
       },
       { "command": "/mute", "description": "Замутить пользователя" },
-      { "command": "/unmute", "description": "Размутить пользователя" }
+      { "command": "/unmute", "description": "Размутить пользователя" },
+      {
+        "command": "/services",
+        "description": "Посмотреть список поддерживаемых сервисов"
+      }
     ]
   },
   {
@@ -71,7 +79,11 @@
       { "command": "/warn", "description": "Ogohlantirish berish" },
       { "command": "/unwarn", "description": "Ogohlantirishni olib tashlash" },
       { "command": "/mute", "description": "Foydalanuvchini ovozsizlantirish" },
-      { "command": "/unmute", "description": "Ovozini qayta yoqish" }
+      { "command": "/unmute", "description": "Ovozini qayta yoqish" },
+      {
+        "command": "/services",
+        "description": "Qo‘llab-quvvatlanadigan platformalar ro‘yxatini ko‘rish"
+      }
     ]
   }
 ]
