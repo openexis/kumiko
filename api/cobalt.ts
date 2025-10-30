@@ -123,4 +123,22 @@ async function is_supported(platform: string): Promise<CobaltResponse> {
   };
 }
 
-export { download, is_supported };
+async function services(): Promise<string[]> {
+  const entry = await kv.get<string>(["COBALT_API_URL"]);
+  const COBALT_API_URL = entry.value;
+
+  if (COBALT_API_URL == undefined) {
+    return [];
+  }
+
+  const response = await fetch(COBALT_API_URL);
+  const { cobalt: { services } } = await response.json() as {
+    cobalt: { services: string[] };
+  };
+
+  services.push("x");
+
+  return services.filter((service) => service != "tiktok");
+}
+
+export { download, is_supported, services };
