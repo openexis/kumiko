@@ -1,11 +1,11 @@
 function getEnv(key: string): string {
-  const value = Deno.env.get(key);
+	const value = Deno.env.get(key);
 
-  if (value == undefined) {
-    throw new Error(`${key} is not set in .env`);
-  }
+	if (value == undefined) {
+		throw new Error(`${key} is not set in .env`);
+	}
 
-  return value;
+	return value;
 }
 
 const BOT_TOKEN = getEnv("BOT_TOKEN");

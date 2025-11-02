@@ -6,46 +6,46 @@ import { isAdmin } from "../utils/detect.ts";
 import { setCommands } from "../utils/setCommands.ts";
 
 const locales = [
-  {
-    code: "en",
-    name: "English",
-    emoji: "🇬🇧",
-  },
-  {
-    code: "ru",
-    name: "Русский",
-    emoji: "🇷🇺",
-  },
-  {
-    code: "uz",
-    name: "O'zbek",
-    emoji: "🇺🇿",
-  },
+	{
+		code: "en",
+		name: "English",
+		emoji: "🇬🇧",
+	},
+	{
+		code: "ru",
+		name: "Русский",
+		emoji: "🇷🇺",
+	},
+	{
+		code: "uz",
+		name: "O'zbek",
+		emoji: "🇺🇿",
+	},
 ];
 
 const keyboard = new InlineKeyboard();
 locales.map((locale: { code: string; name: string; emoji: string }) => {
-  keyboard.text(`${locale.name} ${locale.emoji}`, locale.code).row();
+	keyboard.text(`${locale.name} ${locale.emoji}`, locale.code).row();
 });
 
 bot.command("lang", async (ctx: MyContext) => {
-  if (!await isAdmin(ctx)) {
-    return await ctx.reply(ctx.t("only-admins-can-use"));
-  }
+	if (!await isAdmin(ctx)) {
+		return await ctx.reply(ctx.t("only-admins-can-use"));
+	}
 
-  await ctx.reply(ctx.t("choose-language"), {
-    reply_markup: keyboard,
-  });
+	await ctx.reply(ctx.t("choose-language"), {
+		reply_markup: keyboard,
+	});
 });
 
 bot.on("callback_query", async (ctx) => {
-  const locale = ctx.callbackQuery.data;
-  await kv.set(["locale", ctx.chat!.id.toString()], locale);
+	const locale = ctx.callbackQuery.data;
+	await kv.set(["locale", ctx.chat!.id.toString()], locale);
 
-  await setCommands(ctx, locale);
+	await setCommands(ctx, locale);
 
-  await ctx.answerCallbackQuery({
-    text: ctx.t("language-changed", { locale: locale! }),
-    show_alert: true,
-  });
+	await ctx.answerCallbackQuery({
+		text: ctx.t("language-changed", { locale: locale! }),
+		show_alert: true,
+	});
 });

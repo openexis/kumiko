@@ -1,9 +1,15 @@
 {
-  "tasks": {
-    "check": "deno check --unstable **/*.ts",
-    "lint": "deno lint --watch",
-    "run": "deno run --watch --unstable-kv -A --env ./mod.ts",
-    "format": "deno fmt --watch",
-    "dev": "deno task check & deno task lint & deno task run & deno task format"
-  }
+	"tasks": {
+		"check": "deno check --unstable **/*.ts",
+		"lint": "deno lint --watch",
+		"run": "deno run --watch --unstable-kv -A --env ./mod.ts",
+		"format": "deno fmt --watch",
+		"dev": "deno task check & deno task lint & deno task run & deno task format"
+	},
+	"fmt": {
+		"useTabs": true,
+		"indentWidth": 4,
+		"bracePosition": "sameLine",
+		"trailingCommas": "onlyMultiLine"
+	}
 }

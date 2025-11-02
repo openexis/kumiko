@@ -1,6 +1,8 @@
 {
-  "deno.enable": true,
-  "deno.lint": true,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "denoland.vscode-deno"
+	"deno.enable": true,
+	"deno.lint": true,
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "denoland.vscode-deno",
+	"editor.tabSize": 4,
+	"typescript.inlayHints.parameterNames.enabled": "all"
 }
