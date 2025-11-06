@@ -27,10 +27,10 @@ async function getCobaltApiUrl(): Promise<string | undefined> {
 	
 	// Fetch from KV and update cache
 	const entry = await kv.get<string>(["COBALT_API_URL"]);
-	if (entry.value !== null) {
-		cachedCobaltApiUrl = entry.value;
-		cacheTimestamp = now;
-	}
+	
+	// Update cache - including null to avoid serving stale data
+	cachedCobaltApiUrl = entry.value;
+	cacheTimestamp = now;
 	
 	return entry.value ?? undefined;
 }

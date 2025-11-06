@@ -8,6 +8,18 @@ import {
 
 import { kv } from "../config/kv.ts";
 
+// HTML escape function to prevent XSS attacks
+function escapeHtml(text: string): string {
+	const map: Record<string, string> = {
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': "&quot;",
+		"'": "&#39;",
+	};
+	return text.replace(/[&<>"']/g, (char) => map[char]);
+}
+
 const karma_words = [
 	"thanks",
 	"tnx",
@@ -138,7 +150,8 @@ bot.command("top", async (ctx) => {
 		const chatMember = chatMembers[i];
 		
 		if (chatMember) {
-			reply += `${i + 1}. <a href="tg://user?id=${user.id}">${chatMember.user.first_name}</a> — <b>${user.karma}</b>\n`;
+			const escapedName = escapeHtml(chatMember.user.first_name);
+			reply += `${i + 1}. <a href="tg://user?id=${user.id}">${escapedName}</a> — <b>${user.karma}</b>\n`;
 		} else {
 			// Fallback for users who left the chat
 			reply += `${i + 1}. User (ID: ${user.id}) — <b>${user.karma}</b>\n`;
