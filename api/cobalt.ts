@@ -7,7 +7,7 @@ interface CobaltResponse {
 	filetype: "video" | "photo" | "idk";
 }
 
-export interface Speicfic {
+export interface Specific {
 	youtubeVideoCodec?: "h264" | "av1" | "vp9";
 	youtubeVideoContainer?: "auto" | "mp4" | "webm" | "mkv";
 }
@@ -20,15 +20,15 @@ const CACHE_TTL = 60000; // 1 minute cache
 async function getCobaltApiUrl(): Promise<string | undefined> {
 	const now = Date.now();
 	
-	// Return cached value if still valid
+	// Return cached value if still valid (including null to avoid repeated KV lookups)
 	if (cachedCobaltApiUrl !== null && (now - cacheTimestamp) < CACHE_TTL) {
 		return cachedCobaltApiUrl;
 	}
 	
-	// Fetch from KV and update cache
+	// Fetch from KV and update cache (cache null values to avoid repeated lookups for missing config)
 	const entry = await kv.get<string>(["COBALT_API_URL"]);
 	
-	// Update cache - including null to avoid serving stale data
+	// Update cache - including null to avoid repeated KV lookups
 	cachedCobaltApiUrl = entry.value;
 	cacheTimestamp = now;
 	
@@ -37,7 +37,7 @@ async function getCobaltApiUrl(): Promise<string | undefined> {
 
 async function download(
 	url: string,
-	specific?: Speicfic,
+	specific?: Specific,
 ): Promise<CobaltResponse> {
 	const COBALT_API_URL = await getCobaltApiUrl();
 

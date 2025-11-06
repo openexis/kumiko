@@ -49,7 +49,7 @@ const karma_words = [
 bot.chatType(["group", "supergroup"]).on(":text").filter(
 	(ctx) => {
 		const text = ctx.msg!.text!;
-		const lowerText = ctx.message.text.toLowerCase();
+		const lowerText = text.toLowerCase();
 		const words = lowerText.split(" ");
 		return /^(\+|-)\1*$/.test(text) ||
 			karma_words.some((word) => words.includes(word));
