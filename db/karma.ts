@@ -83,8 +83,10 @@ async function incrementUserChangeCount(
 		getToday(),
 	];
 
-	// Note: This is not truly atomic - race conditions may occur.
-	// Deno KV supports atomic operations; consider using atomicCheck/atomicSet for production.
+	// Note: This has a race condition where concurrent requests could overwrite each other.
+	// For production use, consider Deno KV's atomic API:
+	// const res = await kv.get<number>(key);
+	// await kv.atomic().check(res).set(key, (res.value ?? 0) + 1).commit();
 	const res = await kv.get<number>(key);
 	const current = res.value ?? 0;
 	await kv.set(key, current + 1);

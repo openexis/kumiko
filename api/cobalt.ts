@@ -20,8 +20,8 @@ const CACHE_TTL = 60000; // 1 minute cache
 async function getCobaltApiUrl(): Promise<string | undefined> {
 	const now = Date.now();
 	
-	// Return cached value if still valid (check timestamp to ensure cache was set)
-	if (cacheTimestamp > 0 && (now - cacheTimestamp) < CACHE_TTL) {
+	// Return cached value if still valid and was previously set
+	if (cachedCobaltApiUrl !== undefined && (now - cacheTimestamp) < CACHE_TTL) {
 		return cachedCobaltApiUrl ?? undefined;
 	}
 	

@@ -24,10 +24,9 @@ function escapeHtml(text: string): string {
 function isKarmaMessage(text: string): { isKarma: boolean; isPositive: boolean } {
 	const lowerText = text.toLowerCase();
 	const words = lowerText.split(" ");
-	const isKarma = /^(\+|-)\1*$/.test(text) ||
-		karma_words.some((word) => words.includes(word));
-	const isPositive = text.startsWith("+") ||
-		karma_words.some((word) => words.includes(word));
+	const hasKarmaWords = karma_words.some((word) => words.includes(word));
+	const isKarma = /^(\+|-)\1*$/.test(text) || hasKarmaWords;
+	const isPositive = text.startsWith("+") || hasKarmaWords;
 	
 	return { isKarma, isPositive };
 }
