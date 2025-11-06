@@ -83,7 +83,8 @@ async function incrementUserChangeCount(
 		getToday(),
 	];
 
-	// Optimize by using atomic operation to read and increment in one go
+	// Note: This is not truly atomic - race conditions may occur.
+	// Deno KV supports atomic operations; consider using atomicCheck/atomicSet for production.
 	const res = await kv.get<number>(key);
 	const current = res.value ?? 0;
 	await kv.set(key, current + 1);

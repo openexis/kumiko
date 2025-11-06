@@ -20,6 +20,23 @@ function escapeHtml(text: string): string {
 	return text.replace(/[&<>"']/g, (char) => map[char]);
 }
 
+// Helper function to check if message contains karma words or +/- symbols
+function isKarmaMessage(text: string): boolean {
+	const lowerText = text.toLowerCase();
+	const words = lowerText.split(" ");
+	return /^(\+|-)\1*$/.test(text) ||
+		karma_words.some((word) => words.includes(word));
+}
+
+// Helper function to calculate karma amount
+function calculateKarmaAmount(text: string): 1 | -1 {
+	const lowerText = text.toLowerCase();
+	const words = lowerText.split(" ");
+	return text.startsWith("+") || karma_words.some((word) => words.includes(word))
+		? 1
+		: -1;
+}
+
 const karma_words = [
 	"thanks",
 	"tnx",
@@ -47,13 +64,7 @@ const karma_words = [
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
-	(ctx) => {
-		const text = ctx.msg!.text!;
-		const lowerText = text.toLowerCase();
-		const words = lowerText.split(" ");
-		return /^(\+|-)\1*$/.test(text) ||
-			karma_words.some((word) => words.includes(word));
-	},
+	(ctx) => isKarmaMessage(ctx.msg!.text!),
 	async (ctx, next) => {
 		if (!ctx.message?.reply_to_message) return await next();
 
@@ -70,14 +81,7 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
 			return await ctx.reply(ctx.t("cant-change-user-karma"));
 		}
 
-		// Check if it's a positive karma change (reuse filter logic)
-		const text = ctx.msg!.text!;
-		const lowerText = text.toLowerCase();
-		const words = lowerText.split(" ");
-		const karma_amount = text.startsWith("+") ||
-				karma_words.some((word) => words.includes(word))
-			? 1
-			: -1;
+		const karma_amount = calculateKarmaAmount(ctx.msg!.text!);
 		const reply_user_name = reply_user.first_name;
 
 		await incrementUserChangeCount(chat_id, user_id);

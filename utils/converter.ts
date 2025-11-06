@@ -28,7 +28,7 @@ async function fetchWithCache(currencyCode: string): Promise<ExchangeRates> {
 	
 	// Fetch fresh data with error handling
 	try {
-		const url = URL + currencyCode;
+		const url = `${URL}${currencyCode}`;
 		const response = await fetch(url);
 		
 		if (!response.ok) {
