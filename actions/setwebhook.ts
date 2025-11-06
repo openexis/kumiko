@@ -14,7 +14,13 @@ bot.chatType([
 			);
 		}
 
-		if (!await isAdmin(ctx) || !await isOwner(bot, ctx)) {
+		// Parallelize permission checks for better performance
+		const [userIsAdmin, userIsOwner] = await Promise.all([
+			isAdmin(ctx),
+			isOwner(bot, ctx),
+		]);
+
+		if (!userIsAdmin || !userIsOwner) {
 			return await ctx.reply(ctx.t("only-admins-can-use"));
 		}
 

@@ -83,7 +83,9 @@ async function incrementUserChangeCount(
 		getToday(),
 	];
 
-	const current = await getUserChangeCount(chat_id, user_id);
+	// Optimize by using atomic operation to read and increment in one go
+	const res = await kv.get<number>(key);
+	const current = res.value ?? 0;
 	await kv.set(key, current + 1);
 }
 

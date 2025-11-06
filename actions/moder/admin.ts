@@ -23,21 +23,17 @@ bot
 				return;
 			}
 
-			const bot_member = await bot.api.getChatMember(
-				chatId,
-				bot.botInfo.id,
-			) as ChatMemberAdministrator;
+			// Parallelize getChatMember API calls for better performance
+			const [bot_member, member] = await Promise.all([
+				bot.api.getChatMember(chatId, bot.botInfo.id) as Promise<ChatMemberAdministrator>,
+				bot.api.getChatMember(chatId, user.id),
+			]);
 
 			if (!bot_member.can_promote_members) {
 				return await ctx.reply(
 					ctx.t("i-dont-have-permission-to-add-admin"),
 				);
 			}
-
-			const member = await bot.api.getChatMember(
-				chatId,
-				user.id,
-			);
 
 			console.log(member.status);
 

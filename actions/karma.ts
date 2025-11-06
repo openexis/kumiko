@@ -35,12 +35,13 @@ const karma_words = [
 
 // Handle + / - karma changes
 bot.chatType(["group", "supergroup"]).on(":text").filter(
-	(ctx) =>
-		/^(\+|-)\1*$/.test(ctx.msg!.text!) ||
-		karma_words.filter((word) =>
-				ctx.message.text.toLowerCase().split(" ").includes(word)
-			)
-				.length > 0,
+	(ctx) => {
+		const text = ctx.msg!.text!;
+		const lowerText = ctx.message.text.toLowerCase();
+		const words = lowerText.split(" ");
+		return /^(\+|-)\1*$/.test(text) ||
+			karma_words.some((word) => words.includes(word));
+	},
 	async (ctx, next) => {
 		if (!ctx.message?.reply_to_message) return await next();
 
@@ -57,11 +58,12 @@ bot.chatType(["group", "supergroup"]).on(":text").filter(
 			return await ctx.reply(ctx.t("cant-change-user-karma"));
 		}
 
-		const karma_amount = ctx.msg!.text!.startsWith("+") ||
-				karma_words.filter((word) =>
-						ctx.msg!.text.toLowerCase().split(" ").includes(word)
-					)
-						.length > 0
+		// Check if it's a positive karma change (reuse filter logic)
+		const text = ctx.msg!.text!;
+		const lowerText = text.toLowerCase();
+		const words = lowerText.split(" ");
+		const karma_amount = text.startsWith("+") ||
+				karma_words.some((word) => words.includes(word))
 			? 1
 			: -1;
 		const reply_user_name = reply_user.first_name;
@@ -118,19 +120,29 @@ bot.command("top", async (ctx) => {
 		return await ctx.reply("📉 Nobody has karma yet.");
 	}
 
+	const chatId = ctx.chatId;
+	if (chatId == undefined) {
+		return;
+	}
+
+	// Parallelize getChatMember API calls for better performance
+	const userPromises = top10.map((user) =>
+		bot.api.getChatMember(chatId, user.id)
+			.catch(() => null) // Handle errors gracefully (user might have left)
+	);
+	const chatMembers = await Promise.all(userPromises);
+
 	let reply = `🏆 <b>${ctx.t("top-10-users-by-karma")}</b>\n\n`;
 	for (let i = 0; i < top10.length; i++) {
 		const user = top10[i];
-		const chatId = ctx.chatId;
-
-		if (chatId == undefined) {
-			return;
+		const chatMember = chatMembers[i];
+		
+		if (chatMember) {
+			reply += `${i + 1}. <a href="tg://user?id=${user.id}">${chatMember.user.first_name}</a> — <b>${user.karma}</b>\n`;
+		} else {
+			// Fallback for users who left the chat
+			reply += `${i + 1}. User (ID: ${user.id}) — <b>${user.karma}</b>\n`;
 		}
-
-		const getChatUser = await bot.api.getChatMember(chatId, user.id);
-		reply += `${
-			i + 1
-		}. <a href="tg://user?id=${user.id}">${getChatUser.user.first_name}</a> — <b>${user.karma}</b>\n`;
 	}
 
 	await ctx.reply(reply, { parse_mode: "HTML" });

@@ -12,12 +12,34 @@ export interface Speicfic {
 	youtubeVideoContainer?: "auto" | "mp4" | "webm" | "mkv";
 }
 
+// Cache the Cobalt API URL to avoid repeated KV lookups
+let cachedCobaltApiUrl: string | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 60000; // 1 minute cache
+
+async function getCobaltApiUrl(): Promise<string | undefined> {
+	const now = Date.now();
+	
+	// Return cached value if still valid
+	if (cachedCobaltApiUrl !== null && (now - cacheTimestamp) < CACHE_TTL) {
+		return cachedCobaltApiUrl;
+	}
+	
+	// Fetch from KV and update cache
+	const entry = await kv.get<string>(["COBALT_API_URL"]);
+	if (entry.value !== null) {
+		cachedCobaltApiUrl = entry.value;
+		cacheTimestamp = now;
+	}
+	
+	return entry.value ?? undefined;
+}
+
 async function download(
 	url: string,
 	specific?: Speicfic,
 ): Promise<CobaltResponse> {
-	const entry = await kv.get<string>(["COBALT_API_URL"]);
-	const COBALT_API_URL = entry.value;
+	const COBALT_API_URL = await getCobaltApiUrl();
 
 	if (COBALT_API_URL == undefined) {
 		return {
@@ -85,8 +107,7 @@ async function download(
 }
 
 async function is_supported(platform: string): Promise<CobaltResponse> {
-	const entry = await kv.get<string>(["COBALT_API_URL"]);
-	const COBALT_API_URL = entry.value;
+	const COBALT_API_URL = await getCobaltApiUrl();
 
 	if (COBALT_API_URL == undefined) {
 		return {
@@ -124,8 +145,7 @@ async function is_supported(platform: string): Promise<CobaltResponse> {
 }
 
 async function services(): Promise<string[]> {
-	const entry = await kv.get<string>(["COBALT_API_URL"]);
-	const COBALT_API_URL = entry.value;
+	const COBALT_API_URL = await getCobaltApiUrl();
 
 	if (COBALT_API_URL == undefined) {
 		return [];
