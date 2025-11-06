@@ -13,16 +13,16 @@ export interface Specific {
 }
 
 // Cache the Cobalt API URL to avoid repeated KV lookups
-let cachedCobaltApiUrl: string | null = null;
+let cachedCobaltApiUrl: string | null | undefined = undefined;
 let cacheTimestamp = 0;
 const CACHE_TTL = 60000; // 1 minute cache
 
 async function getCobaltApiUrl(): Promise<string | undefined> {
 	const now = Date.now();
 	
-	// Return cached value if still valid (including null to avoid repeated KV lookups)
-	if (cachedCobaltApiUrl !== null && (now - cacheTimestamp) < CACHE_TTL) {
-		return cachedCobaltApiUrl;
+	// Return cached value if still valid (check timestamp to ensure cache was set)
+	if (cacheTimestamp > 0 && (now - cacheTimestamp) < CACHE_TTL) {
+		return cachedCobaltApiUrl ?? undefined;
 	}
 	
 	// Fetch from KV and update cache (cache null values to avoid repeated lookups for missing config)

@@ -32,10 +32,16 @@ async function fetchWithCache(currencyCode: string): Promise<ExchangeRates> {
 		const response = await fetch(url);
 		
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			throw new Error(`HTTP error! status: ${response.status} for URL: ${url}`);
 		}
 		
-		const json: ExchangeRates = await response.json();
+		const text = await response.text();
+		let json: ExchangeRates;
+		try {
+			json = JSON.parse(text);
+		} catch (parseError) {
+			throw new Error(`Invalid JSON response from ${url}: ${parseError instanceof Error ? parseError.message : String(parseError)}`);
+		}
 		
 		// Update cache only on successful fetch
 		ratesCache.set(currencyCode, { data: json, timestamp: now });
@@ -44,7 +50,11 @@ async function fetchWithCache(currencyCode: string): Promise<ExchangeRates> {
 	} catch (error) {
 		// If fetch fails and we have cached data, return it even if stale
 		if (cached) {
-			console.error(`Failed to fetch rates for ${currencyCode}, using stale cache:`, error);
+			const ageMinutes = Math.floor((now - cached.timestamp) / 60000);
+			console.error(
+				`Failed to fetch rates for ${currencyCode}, using stale cache (${ageMinutes} minutes old):`,
+				error
+			);
 			return cached.data;
 		}
 		// Otherwise, re-throw the error
