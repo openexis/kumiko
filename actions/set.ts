@@ -77,9 +77,7 @@ bot
 		}
 
 		console.log(
-			`The value is successfully set. \n\n<code>${
-				JSON.stringify(entries)
-			}</code>`,
+			`List of values. \n\n<code>${JSON.stringify(entries)}</code>`,
 		);
 		await ctx.reply(
 			`The value is successfully set. \n\n<blockquote expandable>${
