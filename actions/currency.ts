@@ -37,8 +37,8 @@ bot.on(":text", async (ctx, next) => {
 				const formattedAmount = convertedAmount.toLocaleString(
 					"en-US",
 					{
-						minimumFractionDigits: 2,
-						maximumFractionDigits: 2,
+						minimumFractionDigits: 3,
+						maximumFractionDigits: 4,
 					},
 				);
 				responseMessage += `• ${formattedAmount} **${targetCode}**\n`;
