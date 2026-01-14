@@ -125,28 +125,28 @@ First, fork this repository by clicking **Fork** button or
 
 ### In Deno Deploy Dashboard, click on New Project:
 
-<img src="https://i.imgur.com/GWL9BBK.png">
+<img src="./assets/new-project.png">
 
 ### Then choose the repository by searching.
 
-<img src="https://i.imgur.com/YmdYcCs.png" width=600>
+<img src="./assets/choose-repository.png" width=600>
 
 ### Choose the branch and the entrypoint, then, click the `Deploy Project` button.
 
-<img src="https://i.imgur.com/GLlymGU.png">
-<img src="https://i.imgur.com/RoqS9bl.png">
+<img src="./assets/production-branch.png">
+<img src="./assets/entrypoint.png">
 
 ### In the first try, you'll see an error.
 
-<img src="https://i.imgur.com/X39nKfq.png">
+<img src="./assets/see-error.png">
 
-### You can see the rror by click on `View Logs`.
+### You can see the error by clicking on `View Logs`.
 
-<img src="https://i.imgur.com/4PgRTvq.png">
+<img src="./assets/view-logs.png">
 
 ### Which clearly tells you to set environment variables. Now click on `Settings`
 
-<img src="https://i.imgur.com/ovhIwXH.png">
+<img src="./assets/settings.png">
 
 ### Then set the environment variables like in example.
 
@@ -154,28 +154,28 @@ First, fork this repository by clicking **Fork** button or
 - `HOST` should be set to `WEBHOOK`
 - Optionally, set your organization name
 
-<img src="https://i.imgur.com/FsHUIQ2.png">
+<img src="./assets/env-variables.png">
 
 ### After setting environmental variables, unlink and relink the GitHub repository.
 
-<img src="https://i.imgur.com/iDCktVD.png">
-<img src="https://i.imgur.com/HFpk3Ul.png">
+<img src="./assets/unlink.png">
+<img src="./assets/relink.png">
 
 ### Then click on `Deploy Project`
 
 ### If you see this, your project is successfully deployed.
 
-<img src="https://i.imgur.com/sZftSi6.png">
+<img src="./assets/success.png">
 
 ### Then copy your project URL, in my case `https://akumarujon-kumiko-86.deno.dev/`. Then navigate to `/webhook` route on browser.
 
-### If you see the same, message your bot is running.
+### If you see the same message, it means your bot is running.
 
-<img src="https://i.imgur.com/1aDnvzF.png">
+<img src="./assets/bot-is-running.png">
 
 ### It works.
 
-<img src="https://i.imgur.com/rvX7vsd.png">
+<img src="./assets/it-works.png">
 
 ## Contributing
 
