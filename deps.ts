@@ -7,4 +7,6 @@ export type {
 	LanguageCode,
 } from "https://deno.land/x/grammy/types.web.ts";
 
+export { evaluate } from "npm:mathjs";
+
 export * from "https://deno.land/x/grammy_i18n/mod.ts";

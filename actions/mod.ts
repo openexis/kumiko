@@ -7,6 +7,7 @@ export * from "./locale.ts";
 export * from "./set.ts";
 export * from "./commands.ts";
 export * from "./services.ts";
+export * from "./calculate.ts";
 
 // Moderation commands
 
