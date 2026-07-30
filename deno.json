@@ -11,5 +11,8 @@
 		"indentWidth": 4,
 		"bracePosition": "sameLine",
 		"trailingCommas": "onlyMultiLine"
+	},
+	"imports": {
+		"mathjs": "npm:mathjs@^15.1.1"
 	}
 }
