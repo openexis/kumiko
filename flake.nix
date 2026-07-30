@@ -21,13 +21,14 @@
       {
         formatter = pkgs.nixfmt;
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [ pkgs.deno ];
+          buildInputs = [ pkgs.deno ];
 
           packages = with pkgs; [
             alejandra
             nixd
             deadnix
             statix
+            deno
 
             self.formatter.${system}
           ];

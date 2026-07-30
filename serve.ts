@@ -1,11 +1,12 @@
 import { handleGithubWebhook } from "./actions/webhook.ts";
 import { bot, instance } from "./config/bot.ts";
-import { serve, webhookCallback } from "./deps.ts";
+import { webhookCallback } from "./deps.ts";
+
+const handle = webhookCallback(bot, "std/http");
 
 const webhook = async () => {
-	const handle = webhookCallback(bot, "std/http");
 	await console.log("[INFO]", `bot is starting on ${Deno.env.get("HOST")}`);
-	await serve(async (req) => {
+	Deno.serve(async (req: Request) => {
 		const url = new URL(req.url);
 
 		if (req.method == "POST") {
@@ -45,7 +46,7 @@ const webhook = async () => {
 					302,
 				);
 		}
-	}, { port: 3000 });
+	});
 };
 
 const polling = async () => {
